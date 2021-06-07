@@ -24,7 +24,7 @@ function Footer() {
           </Typography>
         </Grid>
         <Grid item sm={12} md={4} lg={4}>
-          <Typography variant="h4" className={classes.about_com}>
+          <Typography variant="h4" className={classes.aboutCompany}>
             Information
           </Typography>
           <Typography variant="p" className={classes.content}>
@@ -39,7 +39,7 @@ function Footer() {
           </Typography>
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={4}>
-          <Typography variant="h4" className={classes.about_com}>
+          <Typography variant="h4" className={classes.aboutCompany}>
             News Letter
           </Typography>
           <Typography variant="p" className={classes.content}>

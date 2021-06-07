@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
@@ -18,12 +18,20 @@ import NavbarStyles from "./NavbarStyles";
 
 function Navbar() {
   const classes = NavbarStyles();
+  const history = useHistory();
   const [dropdown, setDropdown] = useState(null);
+
   const handleClick = (event) => {
     setDropdown(event.currentTarget);
   };
   const handleClose = () => {
     setDropdown(null);
+  };
+  const homeHandler = () => {
+    history.push("./");
+  };
+  const productHandler = () => {
+    history.push("./commonProducts");
   };
   return (
     <div>
@@ -36,8 +44,12 @@ function Navbar() {
             </Typography>
 
             <Typography variant="button" className={classes.button}>
-              <Button color="inherit">Home</Button>
-              <Button color="inherit">Products</Button>
+              <Button color="inherit" onClick={homeHandler}>
+                Home
+              </Button>
+              <Button color="inherit" onClick={productHandler}>
+                Products
+              </Button>
               <Button color="inherit">Orders</Button>
             </Typography>
 

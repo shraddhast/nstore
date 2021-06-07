@@ -6,24 +6,25 @@ function SocialMediaLogin() {
   const responseFacebook = (response) => {
     console.log(response);
   };
-
   const responseGoogle = (response) => {
     console.log(response);
   };
-
+  console.log("id", process.env.REACT_APP_CLIENT_ID);
   return (
     <div>
       <FacebookLogin
-        appId="494585981737319"
+        appId={process.env.REACT_APP_ID}
         fields="name,email,picture"
         textButton="  LOGIN WITH GOOGLE"
         icon="fa-facebook  "
         callback={responseFacebook}
       />
+
+      <br />
       <br />
 
       <GoogleLogin
-        clientId="188264738493-fi6mp5aj73po4ugl47kcsg5eurbkmuf2.apps.googleusercontent.com" //CLIENTID NOT CREATED YET
+        clientId={process.env.REACT_APP_CLIENT_ID}
         buttonText="LOGIN WITH GOOGLE"
         onSuccess={responseGoogle}
         onFailure={responseGoogle}
