@@ -1,16 +1,21 @@
 import React from "react";
-import { Button, Grid, Typography } from "@material-ui/core";
+import { Button, Grid, Paper, Typography } from "@material-ui/core";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import HomeIcon from "@material-ui/icons/Home";
 import ReorderIcon from "@material-ui/icons/Reorder";
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
 
-import CheckOutStyles from "./CheckOutStyle";
 import Footer from "../DashboardModule/FooterFolder/Footer";
 import Navbar from "../DashboardModule/NavbarFolder/Navbar";
-import CheckOutCard from "./CardFolder/CheckOutCard";
+import MyAccountStyles from "./MyAccountStyles";
+import AccountCard from "./AccountCard";
 
-function CheckOut() {
-  const classes = CheckOutStyles();
+function MyAccount() {
+  const classes = MyAccountStyles();
   return (
     <div>
       <Navbar />
@@ -66,12 +71,13 @@ function CheckOut() {
           </Typography>
         </Grid>
         <Grid item lg={8}>
-          <CheckOutCard />
+          <AccountCard />
         </Grid>
       </Grid>
+
       <Footer />
     </div>
   );
 }
 
-export default CheckOut;
+export default MyAccount;

@@ -1,0 +1,51 @@
+import React from "react";
+import { Button, Grid, Paper, Typography } from "@material-ui/core";
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+
+import GetOrderDetailsStyles from "./GetOrderDetailsStyle";
+
+function CheckOutCard() {
+  const classes = GetOrderDetailsStyles();
+  return (
+    <Card className={classes.cardRoot}>
+      <CardActionArea>
+        <CardContent>
+          <Typography
+            variant="h5"
+            style={{ fontWeight: "bold" }}
+            className={classes.address}
+          >
+            Address
+          </Typography>
+          <hr />
+          <Paper className={classes.paperAddress}>
+            <Typography variant="body2" className={classes.address}>
+              <Typography> 302 , Abhishek Avenue</Typography>
+              <Typography> Indore - 42100</Typography>
+              <Typography>India</Typography>
+            </Typography>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.editButton}
+            >
+              Edit
+            </Button>
+          </Paper>
+        </CardContent>
+      </CardActionArea>
+      <hr />
+      <CardActions>
+        <Button size="small" color="primary" variant="contained">
+          Add Address
+        </Button>
+      </CardActions>
+    </Card>
+  );
+}
+
+export default CheckOutCard;

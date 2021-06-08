@@ -16,6 +16,8 @@ import {
   Typography,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
+import AddIcon from "@material-ui/icons/Add";
+import RemoveIcon from "@material-ui/icons/Remove";
 
 import Footer from "../DashboardModule/FooterFolder/Footer";
 import GetCartDataStyles from "./GetCartDataStyles";
@@ -61,13 +63,18 @@ function GetCartData(props) {
               <TableBody>
                 <TableRow>
                   <TableCell className={classes.imageCell}>
-                    <img src={image.image1} width="40px" height="40px" />
+                    <img
+                      src={image.image1}
+                      width="40px"
+                      height="40px"
+                      style={{ marginRight: "2%" }}
+                    />
                     {title}
                   </TableCell>
-                  <TableCell>
-                    <Button onClick={Increment}>+</Button>
+                  <TableCell className={classes.tableHead}>
+                    <Button onClick={Increment} startIcon={<AddIcon />} />
                     <input value={count} style={{ width: "9px" }} />
-                    <Button onClick={Decrement}>-</Button>
+                    <Button onClick={Decrement} startIcon={<RemoveIcon />} />
                   </TableCell>
                   <TableCell>{price}</TableCell>
                   <TableCell>1234</TableCell>

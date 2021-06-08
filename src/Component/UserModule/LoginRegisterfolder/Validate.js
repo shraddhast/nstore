@@ -23,6 +23,10 @@ export default function validateInfo(valid) {
     errors.email = "Not a valid Email";
   }
 
+  if (valid.oldPassword === "") {
+    errors.oldPassword = "Enter Old Password";
+  }
+
   if (valid.password === "") {
     errors.password = "Enter Password";
   } else if (!/^(?=.*\d)(?=.*[a-z]).{4,14}$/.test(valid.password)) {

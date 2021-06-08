@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 
-const CheckOutStyles = makeStyles((theme) => ({
+const MyAccountStyles = makeStyles((theme) => ({
   mainGrid: {
     padding: "2%",
   },
@@ -15,6 +15,9 @@ const CheckOutStyles = makeStyles((theme) => ({
   button: {
     marginTop: "3%",
   },
+  paper: {
+    width: "80%",
+  },
 }));
 
-export default CheckOutStyles;
+export default MyAccountStyles;
