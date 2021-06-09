@@ -47,7 +47,10 @@ const GetOrderDetailsStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "flex-start",
   },
-
+  submitEdit: {
+    display: "flex",
+    justifyContent: "center",
+  },
   paperChangePassword: {
     marginLeft: "10%",
     marginTop: "5%",
@@ -83,6 +86,21 @@ const GetOrderDetailsStyles = makeStyles((theme) => ({
   },
   profile: {
     fontWeight: "bold",
+  },
+  typoProfile: {
+    margin: "2%",
+  },
+
+  textFieldProfile: {
+    display: "flex",
+    justifyContent: "flex-end",
+  },
+  dialogBox: {
+    padding: "5%",
+  },
+
+  paperEditAddress: {
+    width: "400px",
   },
 }));
 export default GetOrderDetailsStyles;
