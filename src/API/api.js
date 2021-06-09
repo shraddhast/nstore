@@ -7,9 +7,3 @@ export const API = {
     return request(onResponse, url, {}, {}, "GET");
   },
 };
-export const API = {
-  name: (onResponse, parameter) => {
-    const url = BASE_URL + NAME;
-    return request(onResponse, url, {}, {}, "METHOD");
-  },
-};

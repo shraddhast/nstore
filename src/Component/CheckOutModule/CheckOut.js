@@ -5,9 +5,9 @@ import HomeIcon from "@material-ui/icons/Home";
 import ReorderIcon from "@material-ui/icons/Reorder";
 
 import CheckOutStyles from "./CheckOutStyle";
+import CheckOutCard from "./CardFolder/CheckOutCard";
 import Footer from "../DashboardModule/FooterFolder/Footer";
 import Navbar from "../DashboardModule/NavbarFolder/Navbar";
-import CheckOutCard from "./CardFolder/CheckOutCard";
 
 function CheckOut() {
   const classes = CheckOutStyles();
@@ -26,40 +26,40 @@ function CheckOut() {
           />
           <Typography>
             <Button
-              variant="outlined"
+              className={classes.button}
               fullWidth
               startIcon={<ReorderIcon />}
-              className={classes.button}
+              variant="outlined"
             >
               Order
             </Button>
           </Typography>
           <Typography>
             <Button
-              variant="outlined"
+              className={classes.button}
               fullWidth
               startIcon={<AccountBoxIcon />}
-              className={classes.button}
+              variant="outlined"
             >
               Profile
             </Button>
           </Typography>
           <Typography>
             <Button
-              variant="outlined"
+              className={classes.button}
               fullWidth
               startIcon={<HomeIcon />}
-              className={classes.button}
+              variant="outlined"
             >
               Address
             </Button>
           </Typography>
           <Typography>
             <Button
-              variant="outlined"
+              className={classes.button}
               fullWidth
               startIcon={<></>}
-              className={classes.button}
+              variant="outlined"
             >
               Change Password
             </Button>

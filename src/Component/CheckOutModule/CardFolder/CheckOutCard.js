@@ -15,9 +15,9 @@ function CheckOutCard() {
       <CardActionArea>
         <CardContent>
           <Typography
-            variant="h5"
-            style={{ fontWeight: "bold" }}
             className={classes.address}
+            style={{ fontWeight: "bold" }}
+            variant="h5"
           >
             Address
           </Typography>

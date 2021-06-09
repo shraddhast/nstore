@@ -1,16 +1,16 @@
 import "./App.css";
 import { Switch, Route } from "react-router-dom";
 
+import CheckOut from "./Component/CheckOutModule/CheckOut";
 import Dashboard from "./Component/DashboardModule/Dashboard";
 import ForgotPassword from "./Component/UserModule/LoginRegisterfolder/ForgotPassword/ForgotPassword";
-import Login from "./Component/UserModule/LoginRegisterfolder/LoginFolder/Login";
-import Product from "./Component/ProductModule/ProductFolder/Product";
-import Register from "./Component/UserModule/LoginRegisterfolder/RegistrationFolder/Register";
-import OpenProduct from "./Component/ProductDetails/OpenProduct";
 import GetCartData from "./Component/CartModule/GetCartData";
 import GetOrderDetails from "./Component/OrderModule/GetOrderDetails";
-import CheckOut from "./Component/CheckOutModule/CheckOut";
+import Login from "./Component/UserModule/LoginRegisterfolder/LoginFolder/Login";
 import MyAccount from "./Component/MyAccountModule/MyAccount";
+import OpenProduct from "./Component/ProductDetails/OpenProduct";
+import Product from "./Component/ProductModule/ProductFolder/Product";
+import Register from "./Component/UserModule/LoginRegisterfolder/RegistrationFolder/Register";
 
 function App() {
   return (

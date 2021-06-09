@@ -64,10 +64,10 @@ function GetCartData(props) {
                 <TableRow>
                   <TableCell className={classes.imageCell}>
                     <img
-                      src={image.image1}
-                      width="40px"
                       height="40px"
+                      src={image.image1}
                       style={{ marginRight: "2%" }}
+                      width="40px"
                     />
                     {title}
                   </TableCell>
