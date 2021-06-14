@@ -54,6 +54,7 @@ function Product() {
     };
     API.sortHighPrice(onResponse);
   };
+
   return (
     <div>
       <Navbar />
