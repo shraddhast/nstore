@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router";
 import { Button, Grid, Paper, TextField, Typography } from "@material-ui/core";
 import { Radio, RadioGroup, FormControlLabel } from "@material-ui/core";
 import CallIcon from "@material-ui/icons/Call";
@@ -6,6 +7,7 @@ import EmailIcon from "@material-ui/icons/Email";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 
+import { API } from "../../../../API/api";
 import Footer from "../../../DashboardModule/FooterFolder/Footer";
 import Navbar from "../../../DashboardModule/NavbarFolder/Navbar";
 import TextFieldsIcon from "@material-ui/icons/TextFields";
@@ -14,6 +16,7 @@ import validate from "../Validate";
 
 function Register() {
   const classes = RegisterStyles();
+  const history = useHistory();
   const [visible, setVisible] = useState();
   const [visibility, setVisibility] = useState(false);
   const visibleOn = <VisibilityIcon />;
@@ -25,19 +28,26 @@ function Register() {
   const visibilityHandler = () => {
     setVisibility(visibility ? false : true);
   };
-  const [gender, setGender] = useState();
-  const handleChange = (e) => {
-    setGender(e.target.value);
-  };
+
   const [valid, setValid] = useState({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
-    cPassword: "",
-    phoneNumber: "",
-    radio: "",
+    confirm_password: "",
+    mobile: "",
+    gender: "",
   });
+
+  const {
+    firstName,
+    lastName,
+    email,
+    password,
+    confirm_password,
+    mobile,
+    gender,
+  } = valid;
   const [errors, setErrors] = useState();
   const changeHandler = (e) => {
     const { name, value } = e.target;
@@ -49,6 +59,20 @@ function Register() {
   const registerHandler = (e) => {
     e.preventDefault();
     setErrors(validate(valid));
+    register();
+  };
+  const register = () => {
+    const onResponse = {
+      success: (res) => {
+        console.log(res);
+        alert("Registration done successfully");
+        history.push("./login");
+      },
+      error: (error) => {
+        alert(error.message);
+      },
+    };
+    API.register(onResponse, valid);
   };
   return (
     <div>
@@ -65,7 +89,7 @@ function Register() {
               onChange={changeHandler}
               size="small"
               variant="outlined"
-              value={valid.firstName}
+              value={firstName}
               InputProps={{
                 endAdornment: <TextFieldsIcon />,
               }}
@@ -85,7 +109,7 @@ function Register() {
               name="lastName"
               onChange={changeHandler}
               size="small"
-              value={valid.lastName}
+              value={lastName}
               variant="outlined"
               InputProps={{
                 endAdornment: <TextFieldsIcon />,
@@ -106,7 +130,7 @@ function Register() {
               name="email"
               onChange={changeHandler}
               size="small"
-              value={valid.email}
+              value={email}
               variant="outlined"
               InputProps={{
                 endAdornment: <EmailIcon />,
@@ -128,7 +152,7 @@ function Register() {
               onChange={changeHandler}
               size="small"
               type={visible ? "text" : "password"}
-              value={valid.password}
+              value={password}
               variant="outlined"
               InputProps={{
                 endAdornment: (
@@ -147,14 +171,14 @@ function Register() {
 
           <Typography>
             <TextField
-              className={classes.cPasswordTextField}
+              className={classes.confirm_passwordTextField}
               fullWidth
               label="Confirm Password"
-              name="cPassword"
+              name="confirm_password"
               onChange={changeHandler}
               size="small"
               type={visibility ? "text" : "password"}
-              value={valid.cPassword}
+              value={confirm_password}
               variant="outlined"
               InputProps={{
                 endAdornment: (
@@ -167,20 +191,22 @@ function Register() {
           </Typography>
           <p>
             {errors && (
-              <small className={classes.errorMessage}>{errors.cPassword}</small>
+              <small className={classes.errorMessage}>
+                {errors.confirm_password}
+              </small>
             )}
           </p>
 
           <Typography>
             <TextField
-              className={classes.phoneNumber}
+              className={classes.mobile}
               fullWidth
               label="Phone Number"
-              name="phoneNumber"
+              name="mobile"
               onChange={changeHandler}
               size="small"
               variant="outlined"
-              value={valid.phoneNumber}
+              value={mobile}
               InputProps={{
                 endAdornment: <CallIcon />,
               }}
@@ -188,32 +214,29 @@ function Register() {
           </Typography>
           <p>
             {errors && (
-              <small className={classes.errorMessage}>
-                {errors.phoneNumber}
-              </small>
+              <small className={classes.errorMessage}>{errors.mobile}</small>
             )}
           </p>
 
           <RadioGroup
             aria-label="gender"
             className={classes.radioButton}
-            name="radio"
-            onChange={handleChange}
+            name="gender"
+            onChange={changeHandler}
             row={true}
             value={gender}
-            value={valid.radio}
           >
             <FormControlLabel
               control={<Radio />}
               label="Female"
               value="female"
             />
-            <FormControlLabel value="male" control={<Radio />} label="Male" />
-            <FormControlLabel value="other" control={<Radio />} label="Other" />
+            <FormControlLabel control={<Radio />} label="Male" value="male" />
+            <FormControlLabel control={<Radio />} label="Other" value="other" />
           </RadioGroup>
           <p>
             {errors && (
-              <small className={classes.errorMessage}>{errors.radio}</small>
+              <small className={classes.errorMessage}>{errors.gender}</small>
             )}
           </p>
 

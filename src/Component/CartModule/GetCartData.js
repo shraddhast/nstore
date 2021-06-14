@@ -25,8 +25,16 @@ import Navbar from "../DashboardModule/NavbarFolder/Navbar";
 
 function GetCartData(props) {
   const classes = GetCartDataStyles();
-  const { image, title, rating, price } = props.location.value.data;
-  console.log(props.location.value.data);
+  const {
+    mainImage,
+    avgRating,
+    price,
+    description,
+    features,
+    name,
+    subImages,
+  } = props.location.value.data;
+  console.log(props);
 
   const [count, setCount] = useState(0);
 
@@ -65,11 +73,11 @@ function GetCartData(props) {
                   <TableCell className={classes.imageCell}>
                     <img
                       height="40px"
-                      src={image.image1}
+                      src={mainImage}
                       style={{ marginRight: "2%" }}
                       width="40px"
                     />
-                    {title}
+                    {/* {title} */}
                   </TableCell>
                   <TableCell className={classes.tableHead}>
                     <Button onClick={Increment} startIcon={<AddIcon />} />

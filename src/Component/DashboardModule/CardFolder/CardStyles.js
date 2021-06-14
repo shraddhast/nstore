@@ -5,6 +5,7 @@ const CardStyles = makeStyles((theme) => ({
     height: "350px",
     width: "90%",
     marginTop: "50px",
+    marginLeft: "5%",
   },
   media: {
     height: "150px",
@@ -14,10 +15,10 @@ const CardStyles = makeStyles((theme) => ({
     marginTop: "50px",
   },
   addFeedback: {
-    background: "orange",
+    background: "red",
     color: "white",
     "&:hover": {
-      background: "darkOrange",
+      background: "darkRed",
       color: "white",
     },
   },

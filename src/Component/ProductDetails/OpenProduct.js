@@ -26,10 +26,18 @@ import { useHistory } from "react-router";
 
 function OpenProduct(props) {
   const classes = OpenProductStyles();
-  const { image, title, rating, price, description, features } =
-    props.location.value.data;
+  const {
+    mainImage,
+    avgRating,
+    price,
+    description,
+    features,
+    name,
+    id,
+    subImages,
+  } = props.location.value.data;
   console.log(props.location.value.data);
-  const [imageVal, setImageVal] = useState(image.image1);
+  const [imageVal, setImageVal] = useState(mainImage);
   const [tab, setTab] = useState(0);
   const zoomDetails = {
     height: 250,
@@ -59,25 +67,25 @@ function OpenProduct(props) {
               <img
                 className={classes.img_small}
                 onClick={(e) => setImageVal(e.target.currentSrc)}
-                src={image.image1}
+                src={mainImage}
               />
               <img
                 className={classes.img_small}
                 onClick={(e) => setImageVal(e.target.currentSrc)}
-                src={image.image2}
+                src={subImages[0]}
               />
               <img
                 className={classes.img_small}
                 onClick={(e) => setImageVal(e.target.currentSrc)}
-                src={image.image3}
+                src={subImages[1]}
               />
             </Grid>
           </Typography>
         </Grid>
         <Grid item lg={6} className={classes.grid}>
-          <Typography variant="h4">{title}</Typography>
+          <Typography variant="h4">{name}</Typography>
           <Typography>
-            <Rating name="half-rating-read" defaultValue={rating} readOnly />
+            <Rating name="half-rating-read" defaultValue={avgRating} readOnly />
           </Typography>
           <hr />
           <Typography>Price:{price}</Typography>
