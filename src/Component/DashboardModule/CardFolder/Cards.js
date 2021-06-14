@@ -8,16 +8,31 @@ import {
   Button,
   CardContent,
 } from "@material-ui/core";
+import { useHistory } from "react-router";
 
 import CardStyles from "./CardStyles";
 
 function Cards(props) {
   const classes = CardStyles();
-  const { image, description, price, rating } = props.data;
+  const history = useHistory();
+  const { mainImage, description, price, avgRating, id } = props.data;
+  console.log(props);
+
+  const cardHandler = (data) => {
+    history.push({
+      pathname: `/products/:${id}`,
+      value: { data },
+    });
+  };
   return (
-    <Card className={classes.root}>
+    <Card
+      className={classes.root}
+      onClick={() => {
+        cardHandler(props.data);
+      }}
+    >
       <CardActionArea>
-        <CardMedia className={classes.media} image={image} />
+        <CardMedia className={classes.media} image={mainImage} />
         <CardContent>
           <Typography variant="p">{description}</Typography>
           <Typography className={price}>{price}</Typography>
@@ -25,10 +40,10 @@ function Cards(props) {
       </CardActionArea>
 
       <Typography>
-        <Button className={classes.addFeedback}> Add Feedback</Button>
+        <Button className={classes.addFeedback}> Add to Cart</Button>
       </Typography>
       <Typography>
-        <Rating name="half-rating-read" defaultValue={rating} readOnly />
+        <Rating name="half-rating-read" defaultValue={avgRating} readOnly />
       </Typography>
     </Card>
   );

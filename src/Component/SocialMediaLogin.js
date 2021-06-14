@@ -9,7 +9,7 @@ function SocialMediaLogin() {
   const responseGoogle = (response) => {
     console.log(response);
   };
-  console.log("id", process.env.REACT_APP_CLIENT_ID);
+
   return (
     <div>
       <FacebookLogin

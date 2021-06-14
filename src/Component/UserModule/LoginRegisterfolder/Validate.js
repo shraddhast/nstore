@@ -35,20 +35,20 @@ export default function validateInfo(valid) {
     errors.password = "Password length should be between 8-12";
   }
 
-  if (valid.cPassword === "") {
-    errors.cPassword = "Enter Password";
-  } else if (valid.cPassword !== valid.password) {
-    errors.cPassword = "Password did not match";
+  if (valid.confirm_password === "") {
+    errors.confirm_password = "Enter Password";
+  } else if (valid.confirm_password !== valid.password) {
+    errors.confirm_password = "Password did not match";
   }
 
-  if (valid.phoneNumber === " ") {
-    errors.phoneNumber = "Phone number required";
-  } else if (!/^[0-9]{10}$/.test(valid.phoneNumber)) {
-    errors.phoneNumber = "10 digit number required";
+  if (valid.mobile === " ") {
+    errors.mobile = "Phone number required";
+  } else if (!/^[0-9]{10}$/.test(valid.mobile)) {
+    errors.mobile = "10 digit number required";
   }
 
-  if (valid.radio == "") {
-    errors.radio = "Select Gender";
+  if (valid.gender == "") {
+    errors.gender = "Select Gender";
   }
 
   return errors;

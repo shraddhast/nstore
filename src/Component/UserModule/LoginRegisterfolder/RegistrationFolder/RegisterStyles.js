@@ -20,7 +20,7 @@ const RegisterStyles = makeStyles((theme) => ({
   passwordTextField: {
     marginTop: "2%",
   },
-  cPasswordTextField: {
+  confirm_passwordTextField: {
     marginTop: "2%",
   },
   phoneNumber: {

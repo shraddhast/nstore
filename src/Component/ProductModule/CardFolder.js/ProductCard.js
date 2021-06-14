@@ -14,7 +14,17 @@ import ProductCartStyles from "./ProductCartStyle";
 
 function ProductCard(props) {
   const classes = ProductCartStyles();
-  const { image, price, rating, title, id } = props.data;
+  const {
+    mainImage,
+    subImagesUrl,
+    name,
+    description,
+    color,
+    price,
+    avgRating,
+    features,
+    id,
+  } = props.data;
   const history = useHistory();
   const handleClick = (data) => {
     history.push({
@@ -35,11 +45,11 @@ function ProductCard(props) {
             className={classes.cardMedia}
             component="img"
             alt="Contemplative Reptile"
-            image={image.image1}
+            image={mainImage}
             title="Contemplative Reptile"
           />
           <CardContent>
-            <Typography>{title}</Typography>
+            <Typography>{features}</Typography>
             <Typography variant="h6">{price}</Typography>
           </CardContent>
         </CardActionArea>
@@ -53,7 +63,7 @@ function ProductCard(props) {
           Add to Cart
         </Button>
         <Typography>
-          <Rating name="half-rating-read" defaultValue={rating} readOnly />
+          <Rating name="half-rating-read" defaultValue={avgRating} readOnly />
         </Typography>
       </Card>
     </div>

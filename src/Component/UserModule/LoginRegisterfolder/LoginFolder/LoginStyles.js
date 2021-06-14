@@ -25,6 +25,16 @@ const LoginStyles = makeStyles((theme) => ({
     justifyContent: "flex-start",
     marginLeft: "10%",
   },
+  registerButton: {
+    margin: "2%",
+  },
+  forgotPasswordButton: {
+    margin: "2%",
+  },
+  submitButton: {
+    marginLeft: "30%",
+    marginTop: "10%",
+  },
 }));
 
 export default LoginStyles;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Grid,
   Paper,
@@ -10,14 +10,30 @@ import {
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
+import { API } from "../../../API/api";
 import SideButtonStyles from "./SideButtonStyles";
 
 function SideButton() {
   const classes = SideButtonStyles();
+  const [products, setProducts] = useState({});
+
+  const allProductHandler = () => {
+    const onResponse = {
+      success: (res) => {
+        console.log(res.data.docs);
+        setProducts(res.data.docs);
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    };
+    API.listProduct(onResponse);
+  };
+
   return (
     <div>
       <Paper variant="elevation" className={classes.allProduct}>
-        <Button> All Product</Button>
+        <Button onClick={allProductHandler}> All Product</Button>
       </Paper>
       <Typography className={classes.categories}>
         <Accordion>
