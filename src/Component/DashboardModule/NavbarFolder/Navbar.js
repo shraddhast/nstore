@@ -1,61 +1,96 @@
-import React, { useState } from 'react'
-import { AppBar, Toolbar,Typography,Button,MenuItem,Menu} from '@material-ui/core'
-import AccountBoxIcon from '@material-ui/icons/AccountBox';
-import InputBase from '@material-ui/core/InputBase';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import SearchIcon from '@material-ui/icons/Search';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import React, { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  MenuItem,
+  Menu,
+} from "@material-ui/core";
+import AccountBoxIcon from "@material-ui/icons/AccountBox";
+import InputBase from "@material-ui/core/InputBase";
+import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
+import SearchIcon from "@material-ui/icons/Search";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 
-import NavbarStyles from './NavbarStyles'
+import NavbarStyles from "./NavbarStyles";
 
 function Navbar() {
-    const classes = NavbarStyles()
-    const [dropdown, setDropdown] = useState(null)
-    const handleClick = (event) => {
-        setDropdown(event.currentTarget);
-      };
-    const handleClose = () => {
-        setDropdown(null);
-      };
-    return (
-        <div>
-        <div className={classes.root}>
-            <AppBar position="static" className={classes.appBar}>
-                <Toolbar>
-                    <Typography variant="h6" className={classes.neoStore}>
-                     Neo
-                     <span className={classes.store}>STORE</span>
-                    </Typography>
+  const classes = NavbarStyles();
+  const history = useHistory();
+  const [dropdown, setDropdown] = useState(null);
 
-                    <Typography variant="button" className={classes.button}>
-                        <Button color="inherit" >Home</Button>
-                        <Button color="inherit" >Products</Button>
-                        <Button color="inherit">Orders</Button>
-                    </Typography>
+  const handleClick = (event) => {
+    setDropdown(event.currentTarget);
+  };
+  const handleClose = () => {
+    setDropdown(null);
+  };
+  const homeHandler = () => {
+    history.push("./");
+  };
+  const productHandler = () => {
+    history.push("./commonProducts");
+  };
+  return (
+    <div>
+      <div className={classes.root}>
+        <AppBar position="static" className={classes.appBar}>
+          <Toolbar>
+            <Typography variant="h6" className={classes.neoStore}>
+              Neo
+              <span className={classes.store}>STORE</span>
+            </Typography>
 
-                    <InputBase placeholder="Search…"
-                    startAdornment={<SearchIcon/>}
-                    className={classes.inputBase}/>
+            <Typography variant="button" className={classes.button}>
+              <Button color="inherit" onClick={homeHandler}>
+                Home
+              </Button>
+              <Button color="inherit" onClick={productHandler}>
+                Products
+              </Button>
+              <Button color="inherit">Orders</Button>
+            </Typography>
 
-                    <Button className={classes.buttonCart}
-                        startIcon={<ShoppingCartIcon />}>Cart</Button>
+            <InputBase
+              placeholder="Search…"
+              startAdornment={<SearchIcon />}
+              className={classes.inputBase}
+            />
 
-                    <Button className={classes.buttonProfile} onClick={handleClick}
-                        startIcon={<AccountBoxIcon/>} endIcon={<KeyboardArrowDownIcon/>}></Button>
-                     <Menu id="simple-menu"
-                                anchorEl={dropdown}
-                                keepMounted
-                                open={Boolean(dropdown)}
-                                onClose={handleClose} >
-                                <MenuItem>Login</MenuItem>
-                                <MenuItem>Register</MenuItem>
-                            </Menu>
+            <Button
+              className={classes.buttonCart}
+              startIcon={<ShoppingCartIcon />}
+            >
+              Cart
+            </Button>
 
-                </Toolbar>
-            </AppBar>
-        </div>
-        </div>
-    )
+            <Button
+              className={classes.buttonProfile}
+              onClick={handleClick}
+              startIcon={<AccountBoxIcon />}
+              endIcon={<KeyboardArrowDownIcon />}
+            ></Button>
+            <Menu
+              id="simple-menu"
+              anchorEl={dropdown}
+              keepMounted
+              open={Boolean(dropdown)}
+              onClose={handleClose}
+            >
+              <Link to="/login">
+                <MenuItem>Login</MenuItem>
+              </Link>
+              <Link to="/register">
+                <MenuItem>Register</MenuItem>
+              </Link>
+            </Menu>
+          </Toolbar>
+        </AppBar>
+      </div>
+    </div>
+  );
 }
 
-export default Navbar
+export default Navbar;
