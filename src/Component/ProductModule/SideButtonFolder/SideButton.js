@@ -15,7 +15,8 @@ import SideButtonStyles from "./SideButtonStyles";
 
 function SideButton() {
   const classes = SideButtonStyles();
-  const [products, setProducts] = useState({});
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   const allProductHandler = () => {
     const onResponse = {
@@ -30,6 +31,40 @@ function SideButton() {
     API.listProduct(onResponse);
   };
 
+  const getCategories = () => {
+    const onResponse = {
+      success: (res) => {
+        setCategories(res.data);
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    };
+
+    API.category(onResponse);
+  };
+
+  const getProductsByCategory = (category) => {
+    const onResponse = {
+      success: (res) => {
+        console.log(res);
+        setProducts(res.data.docs);
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    };
+
+    const params = {
+      category: category._id,
+    };
+    API.getProductsByCategory(onResponse, params);
+  };
+
+  useEffect(() => {
+    getCategories();
+    console.log(1);
+  }, []);
   return (
     <div>
       <Paper variant="elevation" className={classes.allProduct}>
@@ -40,12 +75,13 @@ function SideButton() {
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography>Categories</Typography>
           </AccordionSummary>
-          <Typography>
-            <Button>Sofa</Button>
-          </Typography>
-          <Typography>
-            <Button>Bed</Button>
-          </Typography>
+          {categories?.map((category) => (
+            <Typography>
+              <Button onClick={() => getProductsByCategory(category)}>
+                {category.name}
+              </Button>
+            </Typography>
+          ))}
         </Accordion>
       </Typography>
       <Typography className={classes.categories}>

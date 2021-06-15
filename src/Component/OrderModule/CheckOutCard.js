@@ -10,115 +10,191 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
+import { API } from "../../API/api";
 import GetOrderDetailsStyles from "./GetOrderDetailsStyle";
+import { useHistory } from "react-router";
 
-function CheckOutCard() {
+function CheckOutCard(props) {
   const classes = GetOrderDetailsStyles();
+  const history = useHistory();
+  const [addressData, setAddressData] = useState({
+    addressLine: "",
+    pincode: "",
+    city: "",
+    state: "",
+    country: "",
+  });
+  const { addressLine, pincode, city, state, country } = addressData;
+
+  // const [arrayState, setArrayState] = useState({
+  //   array: [],
+  // });
+  // const { array } = arrayState;
+
+  const { getAddress } = props;
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setAddressData({
+      ...addressData,
+      [name]: value,
+    });
+  };
 
   const [open, setOpen] = useState(false);
   const [dialog, setDialog] = useState(false);
-
   const openDialogHandler = () => {
     setOpen(open ? false : true);
   };
   const dialogHandler = () => {
     setDialog(dialog ? false : true);
   };
-  return (
-    <Card className={classes.cardRoot}>
-      <CardActionArea>
-        <CardContent>
-          <Typography
-            variant="h5"
-            style={{ fontWeight: "bold" }}
-            className={classes.address}
-          >
-            Address
-          </Typography>
-          <hr />
-          <Paper className={classes.paperAddress}>
-            <Typography variant="body2" className={classes.address}>
-              <Typography> 302 , Abhishek Avenue</Typography>
-              <Typography> Indore - 42100</Typography>
-              <Typography>India</Typography>
-            </Typography>
-            <Button
-              className={classes.editButton}
-              color="primary"
-              onClick={openDialogHandler}
-              variant="contained"
-            >
-              Edit
-            </Button>
 
-            <Dialog
-              open={open}
-              onClose={openDialogHandler}
-              className={classes.dialogBox}
-            >
-              <Paper className={classes.paperEditAddress}>
-                <DialogTitle>Edit Address</DialogTitle>
-                <DialogContent>
-                  <Typography className={classes.typoProfile}>
-                    Address:
-                    <TextField
-                      id="standard-multiline-static"
-                      variant="outlined"
-                      size="small"
-                      className={classes.textFieldProfile}
-                    />
-                  </Typography>
-                  <Typography className={classes.typoProfile}>
-                    Pincode:
-                    <TextField
-                      variant="outlined"
-                      size="small"
-                      className={classes.textFieldProfile}
-                    />
-                  </Typography>
-                  <Typography className={classes.typoProfile}>
-                    City:
-                    <TextField
-                      variant="outlined"
-                      size="small"
-                      className={classes.textFieldProfile}
-                    />
-                  </Typography>
-                  <Typography className={classes.typoProfile}>
-                    State:
-                    <TextField
-                      variant="outlined"
-                      size="small"
-                      className={classes.textFieldProfile}
-                    />
-                  </Typography>
-                  <Typography className={classes.typoProfile}>
-                    Country:
-                    <TextField
-                      variant="outlined"
-                      size="small"
-                      className={classes.textFieldProfile}
-                    />
-                  </Typography>
-                </DialogContent>
-                <DialogActions className={classes.submitEdit}>
+  const postAddressHandler = () => {
+    newAddress();
+  };
+  const newAddress = () => {
+    const onResponse = {
+      success: (res) => {
+        console.log("res", res.data.address);
+        // setArrayState({ array: res.data.address });
+      },
+      error: (error) => {},
+    };
+    API.newAddress(onResponse, addressData);
+  };
+
+  const editHandler = (e) => {
+    e.preventDefault();
+    updateAddress();
+    setDialog(false);
+  };
+  function updateAddress() {
+    const onResponse = {
+      success: (res) => {
+        console.log("res", res);
+        setAddressData(addressData);
+      },
+      error: (error) => {},
+    };
+    API.updateAddress(onResponse, addressData);
+  }
+
+  return (
+    <div>
+      <Paper className={classes.paperAddress}>
+        <Typography
+          variant="h5"
+          style={{ fontWeight: "bold" }}
+          className={classes.address}
+        >
+          Address
+        </Typography>
+        <hr />
+        {getAddress &&
+          getAddress.map((address) => (
+            <Card className={classes.cardRoot}>
+              <CardContent>
+                <Typography variant="body2" className={classes.address}>
+                  <Typography> {address.addressLine}</Typography>
+                  <Typography> {address.pincode}</Typography>
                   <Typography>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      className={classes.submitEdit}
-                    >
-                      Submit
-                    </Button>
+                    {address.city} ,{address.state}- {address.country}
                   </Typography>
-                </DialogActions>
-              </Paper>
-            </Dialog>
+                </Typography>
+                <Button
+                  className={classes.editButton}
+                  color="primary"
+                  onClick={openDialogHandler}
+                  variant="contained"
+                >
+                  Edit
+                </Button>
+              </CardContent>
+            </Card>
+          ))}
+
+        <Dialog
+          open={open}
+          onClose={openDialogHandler}
+          className={classes.dialogBox}
+        >
+          <Paper className={classes.paperEditAddress}>
+            <DialogTitle>Edit Address</DialogTitle>
+            <DialogContent>
+              <Typography className={classes.typoProfile}>
+                Address:
+                <TextField
+                  className={classes.textFieldProfile}
+                  name="addressLine"
+                  onChange={handleChange}
+                  size="small"
+                  variant="outlined"
+                  value={addressLine}
+                />
+              </Typography>
+              <Typography className={classes.typoProfile}>
+                Pincode:
+                <TextField
+                  className={classes.textFieldProfile}
+                  name="pincode"
+                  onChange={handleChange}
+                  size="small"
+                  variant="outlined"
+                  value={pincode}
+                />
+              </Typography>
+              <Typography className={classes.typoProfile}>
+                City:
+                <TextField
+                  className={classes.textFieldProfile}
+                  name="city"
+                  onChange={handleChange}
+                  size="small"
+                  variant="outlined"
+                  value={city}
+                />
+              </Typography>
+              <Typography className={classes.typoProfile}>
+                State:
+                <TextField
+                  className={classes.textFieldProfile}
+                  name="state"
+                  onChange={handleChange}
+                  size="small"
+                  variant="outlined"
+                  value={state}
+                />
+              </Typography>
+              <Typography className={classes.typoProfile}>
+                Country:
+                <TextField
+                  className={classes.textFieldProfile}
+                  name="country"
+                  onChange={handleChange}
+                  size="small"
+                  variant="outlined"
+                  value={country}
+                />
+              </Typography>
+            </DialogContent>
+            <DialogActions className={classes.submitEdit}>
+              <Typography>
+                <Button
+                  color="primary"
+                  className={classes.submitEdit}
+                  onChange={handleChange}
+                  onClick={editHandler}
+                  variant="contained"
+                >
+                  Submit
+                </Button>
+              </Typography>
+            </DialogActions>
           </Paper>
-        </CardContent>
-      </CardActionArea>
-      <hr />
-      <CardActions>
+        </Dialog>
+
+        <hr />
         <Button
           onClick={dialogHandler}
           color="primary"
@@ -138,56 +214,74 @@ function CheckOutCard() {
               <Typography className={classes.typoProfile}>
                 Address:
                 <TextField
-                  id="standard-multiline-static"
-                  variant="outlined"
-                  size="small"
                   className={classes.textFieldProfile}
+                  name="addressLine"
+                  onChange={handleChange}
+                  size="small"
+                  value={addressLine}
+                  variant="outlined"
                 />
               </Typography>
               <Typography className={classes.typoProfile}>
                 Pincode:
                 <TextField
-                  variant="outlined"
-                  size="small"
                   className={classes.textFieldProfile}
+                  name="pincode"
+                  onChange={handleChange}
+                  size="small"
+                  value={pincode}
+                  variant="outlined"
                 />
               </Typography>
               <Typography className={classes.typoProfile}>
                 City:
                 <TextField
-                  variant="outlined"
-                  size="small"
                   className={classes.textFieldProfile}
+                  name="city"
+                  onChange={handleChange}
+                  size="small"
+                  value={city}
+                  variant="outlined"
                 />
               </Typography>
               <Typography className={classes.typoProfile}>
                 State:
                 <TextField
-                  variant="outlined"
-                  size="small"
                   className={classes.textFieldProfile}
+                  name="state"
+                  onChange={handleChange}
+                  size="small"
+                  value={state}
+                  variant="outlined"
                 />
               </Typography>
               <Typography className={classes.typoProfile}>
                 Country:
                 <TextField
-                  variant="outlined"
-                  size="small"
                   className={classes.textFieldProfile}
+                  name="country"
+                  onChange={handleChange}
+                  size="small"
+                  value={country}
+                  variant="outlined"
                 />
               </Typography>
             </DialogContent>
             <DialogActions className={classes.submitEdit}>
               <Typography>
-                <Button variant="contained" color="primary">
+                <Button
+                  color="primary"
+                  onClick={postAddressHandler}
+                  variant="contained"
+                >
                   Submit
                 </Button>
               </Typography>
             </DialogActions>
           </Paper>
         </Dialog>
-      </CardActions>
-    </Card>
+      </Paper>
+    </div>
   );
 }
 

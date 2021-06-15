@@ -5,6 +5,7 @@ import HomeIcon from "@material-ui/icons/Home";
 import ReorderIcon from "@material-ui/icons/Reorder";
 import SyncAltIcon from "@material-ui/icons/SyncAlt";
 
+import { API } from "../../API/api";
 import CheckOutCard from "./CheckOutCard";
 import ChangePassword from "./ChangePassword";
 import Footer from "../DashboardModule/FooterFolder/Footer";
@@ -20,6 +21,8 @@ function GetOrderDetails() {
   const [checkOut, setCheckOut] = useState(false);
   const [changePassword, setChangePassword] = useState(false);
 
+  const [getAddress, setGetAddress] = useState();
+
   const orderHandler = () => {
     setOrder(true);
     setProfile(false);
@@ -32,6 +35,7 @@ function GetOrderDetails() {
     setProfile(false);
     setCheckOut(true);
     setChangePassword(false);
+    listAddress();
   };
 
   const profileHandler = () => {
@@ -47,7 +51,17 @@ function GetOrderDetails() {
     setCheckOut(false);
     setChangePassword(true);
   };
+  const listAddress = () => {
+    const onResponse = {
+      success: (res) => {
+        console.log("res", res.data.address);
+        setGetAddress(res.data.address);
+      },
+      error: (error) => {},
+    };
 
+    API.listAddress(onResponse);
+  };
   return (
     <div>
       <Navbar />
@@ -56,7 +70,7 @@ function GetOrderDetails() {
       </Typography>
       <hr />
       <Grid container className={classes.rootGrid} spacing={4}>
-        <Grid item lg={4}>
+        <Grid item sm={6} md={6} lg={4}>
           <img
             src="https://cdn1.vectorstock.com/i/1000x1000/29/10/businesspeople-design-person-icon-flat-and-vector-9372910.jpg"
             width="150px"
@@ -107,10 +121,10 @@ function GetOrderDetails() {
             </Button>
           </Typography>
         </Grid>
-        <Grid item lg={8}>
+        <Grid item sm={6} md={6} lg={8}>
           {order ? <OrderCard /> : null}
           {profile ? <MyAccount /> : null}
-          {checkOut ? <CheckOutCard /> : null}
+          {checkOut ? <CheckOutCard getAddress={getAddress} /> : null}
           {changePassword ? <ChangePassword /> : null}
         </Grid>
       </Grid>

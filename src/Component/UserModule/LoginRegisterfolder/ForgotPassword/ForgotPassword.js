@@ -4,10 +4,11 @@ import InfoIcon from "@material-ui/icons/Info";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 
+import { API } from "../../../../API/api";
 import Footer from "../../../DashboardModule/FooterFolder/Footer";
 import ForgotPasswordStyles from "./ForgotPasswordStyles";
 import Navbar from "../../../DashboardModule/NavbarFolder/Navbar";
-import validate from "../Validate";
+import validate from "./ValidateForgotPassword";
 
 function ForgotPassword() {
   const classes = ForgotPasswordStyles(false);
@@ -25,9 +26,9 @@ function ForgotPassword() {
   const [valid, setValid] = useState({
     verification: "",
     password: "",
-    cPassword: "",
+    confirm_password: "",
   });
-  const { verification, password, cPassword } = valid;
+  const { verification, password, confirm_password } = valid;
 
   const changeHandler = (e) => {
     e.preventDefault();
@@ -42,7 +43,29 @@ function ForgotPassword() {
   const submitHandler = (e) => {
     e.preventDefault();
     setErrors(validate(valid));
+
+    const validError = validate(valid);
+    if (Object.keys(validError).length !== 0) {
+      setErrors(validError);
+    } else {
+      resetPassword();
+    }
   };
+
+  function resetPassword() {
+    const onResponse = {
+      success: (res) => {
+        console.log("res", res.success);
+        if (res.success) {
+          console.log(res);
+        }
+      },
+      error: (error) => {
+        alert(error);
+      },
+    };
+    API.resetPassword(onResponse, valid);
+  }
   return (
     <div>
       <Navbar />
@@ -105,12 +128,12 @@ function ForgotPassword() {
             className={classes.cPasswordTextFiled}
             fullWidth
             label="Confirm Password"
-            name="cPassword"
+            name="confirm_password"
             onChange={changeHandler}
             type={visibility ? "text" : "password"}
             size="small"
             variant="outlined"
-            value={cPassword}
+            value={confirm_password}
             InputProps={{
               endAdornment: (
                 <i onClick={visibilityHandler} className={classes.eyeIcon}>
@@ -122,7 +145,9 @@ function ForgotPassword() {
         </Typography>
         <p>
           {errors && (
-            <small className={classes.errorMessage}>{errors.cPassword}</small>
+            <small className={classes.errorMessage}>
+              {errors.confirm_password}
+            </small>
           )}
         </p>
         <Typography>

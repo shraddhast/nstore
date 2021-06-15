@@ -13,7 +13,7 @@ import SocialMediaLogin from "../../../SocialMediaLogin";
 import Footer from "../../../DashboardModule/FooterFolder/Footer";
 import Navbar from "../../../DashboardModule/NavbarFolder/Navbar";
 import LoginStyles from "./LoginStyles";
-import validate from "../Validate";
+import validate from "./ValidateLogin";
 
 function Login() {
   const classes = LoginStyles();
@@ -29,6 +29,7 @@ function Login() {
     email: "",
     password: "",
   });
+  const { email, password } = valid;
   const [errors, setErrors] = useState();
   const [open, setOpen] = useState(false);
 
@@ -42,29 +43,52 @@ function Login() {
   const registerHandler = () => {
     history.push("./register");
   };
+
   const forgotPasswordHandler = () => {
-    history.push("./forgotPassword");
+    const onResponse = {
+      success: (res) => {
+        console.log(res);
+        if (res.success) {
+          history.push("./forgotPassword");
+        }
+      },
+      error: (error) => {
+        alert("Email error");
+      },
+    };
+    API.forgotPassword(onResponse, email);
   };
+
   const dialogHandler = () => {
     setOpen(open ? false : true);
   };
+
   const loginHandler = (e) => {
     e.preventDefault();
-    setErrors(validate(valid));
-    login();
+    const validError = validate(valid);
+    if (Object.keys(validError).length !== 0) {
+      setErrors(validError);
+    } else {
+      login();
+    }
   };
 
-  const login = () => {
+  function login() {
     const onResponse = {
       success: (res) => {
-        history.push("./");
+        localStorage.setItem("token", res.data.token);
+        console.log(res.data.token);
+        if (res.success) {
+          history.push("./");
+        }
       },
       error: (error) => {
-        alert(error.message);
+        alert("Invalid Login");
       },
     };
     API.login(onResponse, valid);
-  };
+  }
+
   return (
     <div>
       <Navbar />
@@ -113,6 +137,11 @@ function Login() {
               }}
             />
           </Typography>
+          <p>
+            {errors && (
+              <small className={classes.errorMessage}>{errors.password}</small>
+            )}
+          </p>
 
           <Typography>
             <Button

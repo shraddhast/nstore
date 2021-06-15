@@ -13,8 +13,28 @@ function AccountCard() {
   const classes = GetOrderDetailsStyles();
   const [open, setOpen] = useState(false);
 
+  const [profile, setProfile] = useState({
+    firstName: "Shraddha",
+    lastName: "Tendulkar",
+    gender: "Female",
+    DOB: "11/07/1998",
+    number: "0987654321",
+    email: "shraddhatendulkar@gmail.com",
+  });
+  const { firstName, lastName, gender, DOB, number, email } = profile;
+
+  const changeHandler = (e) => {
+    const { name, value } = e.target;
+    setProfile({
+      ...profile,
+      [name]: value,
+    });
+  };
   const dialogHandler = () => {
     setOpen(open ? false : true);
+  };
+  const submitEdited = () => {
+    setOpen(false);
   };
   return (
     <div>
@@ -24,22 +44,22 @@ function AccountCard() {
         </Typography>
         <hr />
         <Typography>
-          <b>FirstName:</b> Shraddha
+          <b>FirstName:</b> {firstName}
         </Typography>
         <Typography>
-          <b>LastName:</b> Tendulkar
+          <b>LastName:</b> {lastName}
         </Typography>
         <Typography>
-          <b>Gender:</b> Female
+          <b>Gender:</b> {gender}
         </Typography>
         <Typography>
-          <b>Date of Birth:</b> 11/07/1998
+          <b>Date of Birth:</b> {DOB}
         </Typography>
         <Typography>
-          <b>Number:</b> 987654321
+          <b>Number:</b> {number}
         </Typography>
         <Typography>
-          <b>Email: </b>shraddha.tendulkar@gmail.com
+          <b>Email: </b> {email}
         </Typography>
 
         <hr />
@@ -61,45 +81,75 @@ function AccountCard() {
             <Typography className={classes.typoProfile}>
               FirstName:
               <TextField
-                variant="outlined"
-                size="small"
                 className={classes.textFieldProfile}
+                name="firstName"
+                onChange={changeHandler}
+                size="small"
+                variant="outlined"
+                value={firstName}
               />
             </Typography>
             <Typography className={classes.typoProfile}>
               LastName:
               <TextField
-                variant="outlined"
-                size="small"
                 className={classes.textFieldProfile}
+                name="lastName"
+                onChange={changeHandler}
+                size="small"
+                variant="outlined"
+                value={lastName}
+              />
+            </Typography>
+            <Typography className={classes.typoProfile}>
+              Gender:
+              <TextField
+                className={classes.textFieldProfile}
+                name="gender"
+                onChange={changeHandler}
+                size="small"
+                variant="outlined"
+                value={gender}
               />
             </Typography>
             <Typography className={classes.typoProfile}>
               DOB:
               <TextField
-                variant="outlined"
-                size="small"
                 className={classes.textFieldProfile}
+                name="DOB"
+                onChange={changeHandler}
+                size="small"
+                variant="outlined"
+                value={DOB}
               />
             </Typography>
             <Typography className={classes.typoProfile}>
               Number:
               <TextField
-                variant="outlined"
-                size="small"
                 className={classes.textFieldProfile}
+                name="number"
+                onChange={changeHandler}
+                size="small"
+                variant="outlined"
+                value={number}
               />
             </Typography>
             <Typography className={classes.typoProfile}>
               Email:
               <TextField
-                variant="outlined"
-                size="small"
                 className={classes.textFieldProfile}
+                name="email"
+                onChange={changeHandler}
+                size="small"
+                variant="outlined"
+                value={email}
               />
             </Typography>
             <Typography>
-              <Button variant="contained" color="primary">
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={submitEdited}
+              >
                 Submit
               </Button>
             </Typography>

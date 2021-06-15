@@ -30,11 +30,13 @@ const GetOrderDetailsStyles = makeStyles((theme) => ({
     padding: "2%",
   },
   cardRoot: {
-    width: "60%",
-    marginLeft: "25%",
+    width: "90%",
+    marginLeft: "5%",
   },
   paperAddress: {
     padding: "2%",
+    marginLeft: "15%",
+    width: "70%",
   },
   address: {
     textAlign: "left",

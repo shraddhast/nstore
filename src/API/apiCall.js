@@ -36,11 +36,11 @@ import axios from "axios";
 // );
 
 export const buildHeader = (headerParams) => {
-  const accessToken = localStorage.getItem("accessToken");
+  const token = localStorage.getItem("token");
   const header = {
     Accept: "application/json",
     "mintgenie-client-type": "web",
-    Authorization: `Bearer ${accessToken}`,
+    Authorization: `${token}`,
     ...headerParams,
     // 'Content-Type': 'application/json',
     // 'Cache-Control': 'no-cache'

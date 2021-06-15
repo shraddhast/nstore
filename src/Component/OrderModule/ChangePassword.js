@@ -4,11 +4,14 @@ import InfoIcon from "@material-ui/icons/Info";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 
+import { API } from "../../API/api";
 import GetOrderDetailsStyles from "./GetOrderDetailsStyle";
-import validate from "../UserModule/LoginRegisterfolder/Validate";
+import validate from "./ValidateChangePassword";
+import { useHistory } from "react-router";
 
 function ChangePassword() {
   const classes = GetOrderDetailsStyles();
+  const history = useHistory();
   const [visible, setVisible] = useState();
   const [visibility, setVisibility] = useState(false);
   const [visibly, setVisibly] = useState(false);
@@ -26,11 +29,11 @@ function ChangePassword() {
   };
 
   const [valid, setValid] = useState({
-    oldPassword: "",
     password: "",
-    cPassword: "",
+    newPassword: "",
+    confirmNewPassword: "",
   });
-  const { oldPassword, password, cPassword } = valid;
+  const { password, newPassword, confirmNewPassword } = valid;
 
   const changeHandler = (e) => {
     e.preventDefault();
@@ -45,6 +48,21 @@ function ChangePassword() {
   const submitHandler = (e) => {
     e.preventDefault();
     setErrors(validate(valid));
+    changePassword();
+  };
+
+  const changePassword = () => {
+    const onResponse = {
+      success: (res) => {
+        console.log(res.success);
+        if (res.success) {
+          alert("Password Changed successfully");
+          history.push("./getOrderDetails");
+        }
+      },
+      error: (error) => {},
+    };
+    API.changePassword(onResponse, valid);
   };
   return (
     <div>
@@ -57,11 +75,11 @@ function ChangePassword() {
             className={classes.passwordTextFiled}
             fullWidth
             label="Old Password"
-            name="oldPassword"
+            name="password"
             onChange={changeHandler}
             size="small"
             type={visibly ? "text" : "password"}
-            value={oldPassword}
+            value={password}
             variant="outlined"
             InputProps={{
               endAdornment: (
@@ -74,7 +92,7 @@ function ChangePassword() {
         </Typography>
         <p>
           {errors && (
-            <small className={classes.errorMessage}>{errors.oldPassword}</small>
+            <small className={classes.errorMessage}>{errors.password}</small>
           )}
         </p>
 
@@ -82,12 +100,12 @@ function ChangePassword() {
           <TextField
             className={classes.passwordTextFiled}
             fullWidth
-            label="New Password"
-            name="password"
+            label="NewPassword"
+            name="newPassword"
             onChange={changeHandler}
             size="small"
             type={visible ? "text" : "password"}
-            value={password}
+            value={newPassword}
             variant="outlined"
             InputProps={{
               endAdornment: (
@@ -100,7 +118,7 @@ function ChangePassword() {
         </Typography>
         <p>
           {errors && (
-            <small className={classes.errorMessage}>{errors.password}</small>
+            <small className={classes.errorMessage}>{errors.newPassword}</small>
           )}
         </p>
         <Typography>
@@ -108,11 +126,11 @@ function ChangePassword() {
             className={classes.cPasswordTextFiled}
             fullWidth
             label="Confirm Password"
-            name="cPassword"
+            name="confirmNewPassword"
             onChange={changeHandler}
             type={visibility ? "text" : "password"}
             size="small"
-            value={cPassword}
+            value={confirmNewPassword}
             variant="outlined"
             InputProps={{
               endAdornment: (
@@ -125,9 +143,12 @@ function ChangePassword() {
         </Typography>
         <p>
           {errors && (
-            <small className={classes.errorMessage}>{errors.cPassword}</small>
+            <small className={classes.errorMessage}>
+              {errors.confirmNewPassword}
+            </small>
           )}
         </p>
+
         <Typography>
           <Button
             className={classes.submitButton}

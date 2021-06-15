@@ -12,7 +12,7 @@ import Footer from "../../../DashboardModule/FooterFolder/Footer";
 import Navbar from "../../../DashboardModule/NavbarFolder/Navbar";
 import TextFieldsIcon from "@material-ui/icons/TextFields";
 import RegisterStyles from "./RegisterStyles";
-import validate from "../Validate";
+import validate from "./ValidateRegister";
 
 function Register() {
   const classes = RegisterStyles();
@@ -58,8 +58,13 @@ function Register() {
   };
   const registerHandler = (e) => {
     e.preventDefault();
-    setErrors(validate(valid));
-    register();
+    //setErrors(validate(valid));
+    const validError = validate(valid);
+    if (Object.keys(validError).length !== 0) {
+      setErrors(validError);
+    } else {
+      register();
+    }
   };
   const register = () => {
     const onResponse = {
@@ -69,7 +74,7 @@ function Register() {
         history.push("./login");
       },
       error: (error) => {
-        alert(error.message);
+        // alert();
       },
     };
     API.register(onResponse, valid);

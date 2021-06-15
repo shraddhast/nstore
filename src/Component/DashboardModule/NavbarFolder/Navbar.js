@@ -33,6 +33,12 @@ function Navbar() {
   const productHandler = () => {
     history.push("./commonProducts");
   };
+  const orderHandler = () => {
+    history.push("./getOrderDetails");
+  };
+  const cartHandler = () => {
+    history.push("/getOrderDetails");
+  };
   return (
     <div>
       <div className={classes.root}>
@@ -50,7 +56,9 @@ function Navbar() {
               <Button color="inherit" onClick={productHandler}>
                 Products
               </Button>
-              <Button color="inherit">Orders</Button>
+              <Button color="inherit" onClick={orderHandler}>
+                Orders
+              </Button>
             </Typography>
 
             <InputBase
@@ -61,6 +69,7 @@ function Navbar() {
 
             <Button
               className={classes.buttonCart}
+              onClick={cartHandler}
               startIcon={<ShoppingCartIcon />}
             >
               Cart
