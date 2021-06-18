@@ -23,7 +23,6 @@ const LoginStyles = makeStyles((theme) => ({
     color: "red",
     display: "flex",
     justifyContent: "flex-start",
-    marginLeft: "10%",
   },
   registerButton: {
     margin: "2%",

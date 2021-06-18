@@ -53,6 +53,10 @@ const GetOrderDetailsStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
   },
+  cancelButton: {
+    marginLeft: "90%",
+  },
+
   paperChangePassword: {
     marginLeft: "10%",
     marginTop: "5%",

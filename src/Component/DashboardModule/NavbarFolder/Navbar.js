@@ -37,7 +37,7 @@ function Navbar() {
     history.push("./getOrderDetails");
   };
   const cartHandler = () => {
-    history.push("/getOrderDetails");
+    history.push("/getCartData");
   };
   return (
     <div>

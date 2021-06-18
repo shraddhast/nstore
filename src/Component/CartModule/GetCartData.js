@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router";
 import {
   Button,
   Grid,
@@ -15,35 +16,87 @@ import {
   TableBody,
   Typography,
 } from "@material-ui/core";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 
+import { API } from "../../API/api";
 import Footer from "../DashboardModule/FooterFolder/Footer";
 import GetCartDataStyles from "./GetCartDataStyles";
 import Navbar from "../DashboardModule/NavbarFolder/Navbar";
 
-function GetCartData(props) {
+function GetCartData() {
   const classes = GetCartDataStyles();
-  const {
-    mainImage,
-    avgRating,
-    price,
-    description,
-    features,
-    name,
-    subImages,
-  } = props.location.value.data;
-  console.log(props);
+  const history = useHistory();
+  const [count, setCount] = useState(1);
+  const [grandTotal, setGrandTotal] = useState();
+  const [products, setProducts] = useState([]);
+  const [address, setAddress] = useState();
+  const [addressId, setAddressId] = useState();
+  const [dialog, setDialog] = useState(false);
+  const finalTotal = grandTotal + 500;
 
-  const [count, setCount] = useState(0);
-
+  const dialogHandler = () => {
+    setDialog(dialog ? false : true);
+  };
   const Decrement = () => {
-    setCount(count - 1);
+    setCount((prevCount) => prevCount - 1);
   };
   const Increment = () => {
     setCount(count + 1);
   };
+
+  const deleteHandler = (id) => {
+    const onResponse = {
+      success: (res) => {
+        setProducts(products.filter((product) => product.productId.id !== id));
+      },
+      error: (error) => {},
+    };
+    API.deleteFromCart(onResponse, id);
+  };
+
+  const buyHandler = () => {
+    dialogHandler();
+    listAddress();
+  };
+  const listAddress = () => {
+    const onResponse = {
+      success: (res) => {
+        const data = res.data.address.pop();
+        setAddress(data);
+      },
+      error: (error) => {},
+    };
+    API.listAddress(onResponse);
+  };
+
+  const addressApproveHandler = (id) => {
+    const onResponse = {
+      success: (res) => {
+        history.push("./getOrderDetails");
+      },
+      error: (error) => {},
+    };
+    API.orderPlace(onResponse, { addressId: id });
+    setDialog(false);
+  };
+
+  useEffect(() => {
+    const onResponse = {
+      success: (res) => {
+        setProducts(res.data.products);
+        setGrandTotal(res.data.grandTotal);
+      },
+      error: (error) => {},
+    };
+    API.getFromCart(onResponse);
+  }, []);
   return (
     <div>
       <Navbar />
@@ -69,27 +122,32 @@ function GetCartData(props) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                <TableRow>
-                  <TableCell className={classes.imageCell}>
-                    <img
-                      height="40px"
-                      src={mainImage}
-                      style={{ marginRight: "2%" }}
-                      width="40px"
-                    />
-                    {/* {title} */}
-                  </TableCell>
-                  <TableCell className={classes.tableHead}>
-                    <Button onClick={Increment} startIcon={<AddIcon />} />
-                    <input value={count} style={{ width: "9px" }} />
-                    <Button onClick={Decrement} startIcon={<RemoveIcon />} />
-                  </TableCell>
-                  <TableCell>{price}</TableCell>
-                  <TableCell>1234</TableCell>
-                  <TableCell>
-                    <DeleteIcon />
-                  </TableCell>
-                </TableRow>
+                {products?.map((item) => (
+                  <TableRow>
+                    <TableCell className={classes.imageCell}>
+                      <img
+                        height="40px"
+                        src={item.productId.mainImage}
+                        style={{ marginRight: "2%" }}
+                        width="40px"
+                      />
+                      {item.productId.name} <br />
+                      Status:In Stock
+                    </TableCell>
+                    <TableCell className={classes.tableHead}>
+                      <Button onClick={Increment} startIcon={<AddIcon />} />
+                      <input value={count} style={{ width: "9px" }} />
+                      <Button onClick={Decrement} startIcon={<RemoveIcon />} />
+                    </TableCell>
+                    <TableCell>{item.productId.price}</TableCell>
+                    <TableCell>{grandTotal}</TableCell>
+                    <TableCell>
+                      <DeleteIcon
+                        onClick={() => deleteHandler(item.productId.id)}
+                      />
+                    </TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
           </TableContainer>
@@ -98,14 +156,45 @@ function GetCartData(props) {
         <Grid item xs={12} sm={8} md={8} lg={4}>
           <Paper className={classes.billPaper}>
             <Typography variant="h4">Review Order</Typography>
-            <Typography className={classes.subTotal}>Sub Total :</Typography>
+            <Typography className={classes.subTotal}>
+              Sub Total :{grandTotal}
+            </Typography>
             <hr />
-            <Typography className={classes.subTotal}>GST(5%):</Typography>
+            <Typography className={classes.subTotal}>GST(5%):500</Typography>
             <hr />
-            <Typography className={classes.subTotal}>Order Total: </Typography>
-            <Button variant="contained" color="primary" fullWidth>
+            <Typography className={classes.subTotal}>
+              Order Total:{finalTotal}
+            </Typography>
+            <Button
+              variant="contained"
+              color="primary"
+              fullWidth
+              onClick={buyHandler}
+            >
               Proceed to Buy
             </Button>
+            <Dialog open={dialog} onClose={dialogHandler}>
+              <DialogTitle>Address</DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  {address?.addressLine}, {address?.pincode},{address?.city},
+                  {address?.state},{address?.country}
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={dialogHandler} color="primary">
+                  Cancel
+                </Button>
+                {console.log(address?._id)}
+                <Button
+                  onClick={() => addressApproveHandler(address?._id)}
+                  color="primary"
+                  autoFocus
+                >
+                  Finish
+                </Button>
+              </DialogActions>
+            </Dialog>
           </Paper>
         </Grid>
       </Grid>

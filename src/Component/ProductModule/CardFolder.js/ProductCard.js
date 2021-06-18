@@ -10,6 +10,7 @@ import {
 import { useHistory } from "react-router";
 import Rating from "@material-ui/lab/Rating";
 
+import { API } from "../../../API/api";
 import ProductCartStyles from "./ProductCartStyle";
 
 function ProductCard(props) {
@@ -26,18 +27,18 @@ function ProductCard(props) {
     id,
   } = props.data;
   const history = useHistory();
-  const handleClick = (data) => {
+  const cardHandleClick = (data) => {
     history.push({
-      pathname: `/products/:${id}`,
-      value: { data },
+      pathname: `/products/${id}`,
     });
   };
+
   return (
     <div>
       <Card
         className={classes.card}
         onClick={() => {
-          handleClick(props.data);
+          cardHandleClick(props.data);
         }}
       >
         <CardActionArea>
@@ -55,10 +56,10 @@ function ProductCard(props) {
         </CardActionArea>
 
         <Button
-          color="secondary"
-          size="small"
-          variant="contained"
           className={classes.addCartButton}
+          color="secondary"
+          variant="contained"
+          size="small"
         >
           Add to Cart
         </Button>

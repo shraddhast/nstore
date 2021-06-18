@@ -14,16 +14,6 @@ import ProductStyles from "./ProductStyles";
 function Product() {
   const classes = ProductStyles();
   const [products, setProducts] = useState();
-  useEffect(() => {
-    const onResponse = {
-      success: (res) => {
-        setProducts(res.data.docs);
-        console.log(res.data.docs);
-      },
-      error: (error) => {},
-    };
-    API.listProduct(onResponse);
-  }, []);
 
   const ratingHandler = () => {
     const onResponse = {
@@ -36,6 +26,7 @@ function Product() {
     };
     API.sortRating(onResponse);
   };
+
   const lowPriceHandler = () => {
     const onResponse = {
       success: (res) => {
@@ -45,6 +36,7 @@ function Product() {
     };
     API.sortLowPrice(onResponse);
   };
+
   const highPriceHandler = () => {
     const onResponse = {
       success: (res) => {
@@ -54,6 +46,16 @@ function Product() {
     };
     API.sortHighPrice(onResponse);
   };
+
+  useEffect(() => {
+    const onResponse = {
+      success: (res) => {
+        setProducts(res.data.docs);
+      },
+      error: (error) => {},
+    };
+    API.listProduct(onResponse);
+  }, []);
 
   return (
     <div>

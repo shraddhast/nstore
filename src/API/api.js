@@ -14,6 +14,12 @@ import {
   COLOR,
   ADDRESS,
   UPDATE_ADDRESS,
+  DELETE_ADDRESS,
+  PRODUCTS_CART,
+  REMOVE_PRODUCT_CART,
+  PRODUCT_ID,
+  PLACE_ORDER,
+  GET_ORDER_LIST,
 } from "./apiConstants";
 
 export const API = {
@@ -74,9 +80,37 @@ export const API = {
     const url = ADDRESS;
     return request(onResponse, url, data, {}, "POST");
   },
-  updateAddress: (onResponse, data) => {
-    const url = UPDATE_ADDRESS;
-    return request(onResponse, url, data, {}, "PUT");
+  updateAddress: (onResponse, id, data) => {
+    const url = `${UPDATE_ADDRESS}/${id}`;
+    return request(onResponse, url, id, data, "PUT");
+  },
+  deleteAddress: (onResponse, id) => {
+    const url = `${DELETE_ADDRESS}/${id}`;
+    return request(onResponse, url, id, {}, "DELETE");
+  },
+  addToCart: (onResponse, data, params) => {
+    const url = PRODUCTS_CART;
+    return request(onResponse, url, data, params, "POST");
+  },
+  getFromCart: (onResponse) => {
+    const url = PRODUCTS_CART;
+    return request(onResponse, url, {}, {}, "GET");
+  },
+  deleteFromCart: (onResponse, id) => {
+    const url = `${REMOVE_PRODUCT_CART}/${id}`;
+    return request(onResponse, url, {}, {}, "DELETE");
+  },
+  singleProduct: (onResponse, id) => {
+    const url = `${PRODUCT_ID}/${id}`;
+    return request(onResponse, url, {}, {}, "GET");
+  },
+  getOrderPlace: (onResponse, data) => {
+    const url = GET_ORDER_LIST;
+    return request(onResponse, url, data, {}, "GET");
+  },
+  orderPlace: (onResponse, data) => {
+    const url = PLACE_ORDER;
+    return request(onResponse, url, data, {}, "POST");
   },
 };
 //export default API;

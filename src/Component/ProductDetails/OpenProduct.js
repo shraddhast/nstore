@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import {
   TwitterShareButton,
   EmailShareButton,
@@ -18,6 +18,7 @@ import ShareIcon from "@material-ui/icons/Share";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import WhatsAppIcon from "@material-ui/icons/WhatsApp";
 
+import { API } from "../../API/api";
 import Footer from "../DashboardModule/FooterFolder/Footer";
 import Navbar from "../DashboardModule/NavbarFolder/Navbar";
 import OpenProductStyles from "./OpenProductStyle";
@@ -26,6 +27,7 @@ import { useHistory } from "react-router";
 
 function OpenProduct(props) {
   const classes = OpenProductStyles();
+  const [details, setDetails] = useState({});
   const {
     mainImage,
     avgRating,
@@ -35,33 +37,61 @@ function OpenProduct(props) {
     name,
     id,
     subImages,
-  } = props.location.value.data;
-  console.log(props.location.value.data);
-  const [imageVal, setImageVal] = useState(mainImage);
+  } = details;
+
+  const [imageVal, setImageVal] = useState("");
   const [tab, setTab] = useState(0);
-  const zoomDetails = {
-    height: 250,
-    img: imageVal,
-    zoomPosition: "original",
-    width: 250,
-    zoomWidth: 250,
-  };
   const history = useHistory();
-  const addCartHandler = (data) => {
+
+  const addCartHandler = () => {
     history.push({
       pathname: "/getCartData",
-      value: { data },
     });
+    addToCart();
+  };
+  const addToCart = () => {
+    const onResponse = {
+      success: (res) => {
+        console.log(res);
+      },
+      error: (error) => {},
+    };
+    const params = {
+      productId: id,
+      quantity: 1,
+    };
+    API.addToCart(onResponse, params);
+  };
+
+  useEffect(() => {
+    dataFetching();
+  }, []);
+
+  const dataFetching = () => {
+    const onResponse = {
+      success: (res) => {
+        setDetails(res.data);
+        setImageVal(res.data.mainImage);
+      },
+      error: (error) => {},
+    };
+    const id = props.match.params.id;
+    API.singleProduct(onResponse, id);
   };
   return (
     <div>
       <Navbar />
       <Grid container justify="center">
         <Grid item lg={6}>
-          <div className={classes.zoom_img}>
-            <ReactImageZoom {...zoomDetails} />
+          <div className={classes.imageGrid}>
+            <img
+              alt="main product"
+              height="250px"
+              src={imageVal}
+              marginTop="500px"
+              width="400px"
+            />
           </div>
-
           <Typography>
             <Grid>
               <img
@@ -72,12 +102,12 @@ function OpenProduct(props) {
               <img
                 className={classes.img_small}
                 onClick={(e) => setImageVal(e.target.currentSrc)}
-                src={subImages[0]}
+                src={details?.subImages ? details?.subImages[0] : ""}
               />
               <img
                 className={classes.img_small}
                 onClick={(e) => setImageVal(e.target.currentSrc)}
-                src={subImages[1]}
+                src={details?.subImages ? details?.subImages[1] : ""}
               />
             </Grid>
           </Typography>
@@ -85,10 +115,10 @@ function OpenProduct(props) {
         <Grid item lg={6} className={classes.grid}>
           <Typography variant="h4">{name}</Typography>
           <Typography>
-            <Rating name="half-rating-read" defaultValue={avgRating} readOnly />
+            <Rating name="half-rating-read" value={avgRating || 0} readOnly />
           </Typography>
           <hr />
-          <Typography>Price:{price}</Typography>
+          <Typography> Price:{price}</Typography>
           <Typography>Color:</Typography>
           <Typography className={classes.share}>
             Share: <ShareIcon />
@@ -123,7 +153,7 @@ function OpenProduct(props) {
             variant="contained"
             color="primary"
             className={classes.addCart}
-            onClick={() => addCartHandler(props.location.value.data)}
+            onClick={() => addCartHandler()}
           >
             Add to cart
           </Button>

@@ -40,7 +40,6 @@ function SideButton() {
         console.log(error);
       },
     };
-
     API.category(onResponse);
   };
 
@@ -63,7 +62,6 @@ function SideButton() {
 
   useEffect(() => {
     getCategories();
-    console.log(1);
   }, []);
   return (
     <div>
