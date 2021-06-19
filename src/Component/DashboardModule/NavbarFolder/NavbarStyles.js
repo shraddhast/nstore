@@ -1,30 +1,8 @@
 import { makeStyles } from "@material-ui/core";
 
 const NavbarStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-  },
   appBar: {
     background: "black",
-  },
-  neoStore: {
-    fontWeight: "bold",
-    fontSize: "30px",
-  },
-  store: {
-    color: "red",
-  },
-  button: {
-    flexGrow: 1,
-  },
-  searchIcon: {
-    width: "100%",
-  },
-  inputBase: {
-    background: "white",
-    borderRadius: "2px",
-    color: "black",
-    width: "20%",
   },
   buttonCart: {
     background: "white",
@@ -44,6 +22,28 @@ const NavbarStyles = makeStyles((theme) => ({
       color: "black",
       background: "white",
     },
+  },
+  button: {
+    flexGrow: 1,
+  },
+  inputBase: {
+    background: "white",
+    borderRadius: "2px",
+    color: "black",
+    width: "20%",
+  },
+  neoStore: {
+    fontWeight: "bold",
+    fontSize: "30px",
+  },
+  store: {
+    color: "red",
+  },
+  searchIcon: {
+    width: "100%",
+  },
+  root: {
+    display: "flex",
   },
 }));
 

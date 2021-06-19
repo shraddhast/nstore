@@ -16,13 +16,13 @@ import {
   TableBody,
   Typography,
 } from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DeleteIcon from "@material-ui/icons/Delete";
-import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 
 import { API } from "../../API/api";
@@ -33,19 +33,19 @@ import Navbar from "../DashboardModule/NavbarFolder/Navbar";
 function GetCartData() {
   const classes = GetCartDataStyles();
   const history = useHistory();
+  const [address, setAddress] = useState();
   const [count, setCount] = useState(1);
+  const [dialog, setDialog] = useState(false);
   const [grandTotal, setGrandTotal] = useState();
   const [products, setProducts] = useState([]);
-  const [address, setAddress] = useState();
-  const [addressId, setAddressId] = useState();
-  const [dialog, setDialog] = useState(false);
-  const finalTotal = grandTotal + 500;
+  const GST = (5 / 100) * grandTotal;
+  const finalTotal = grandTotal + GST;
 
   const dialogHandler = () => {
     setDialog(dialog ? false : true);
   };
   const Decrement = () => {
-    setCount((prevCount) => prevCount - 1);
+    setCount(count - 1);
   };
   const Increment = () => {
     setCount(count + 1);
@@ -135,12 +135,12 @@ function GetCartData() {
                       Status:In Stock
                     </TableCell>
                     <TableCell className={classes.tableHead}>
-                      <Button onClick={Increment} startIcon={<AddIcon />} />
-                      <input value={count} style={{ width: "9px" }} />
                       <Button onClick={Decrement} startIcon={<RemoveIcon />} />
+                      <input value={count} style={{ width: "9px" }} />
+                      <Button onClick={Increment} startIcon={<AddIcon />} />
                     </TableCell>
                     <TableCell>{item.productId.price}</TableCell>
-                    <TableCell>{grandTotal}</TableCell>
+                    <TableCell>{item.productId.price}</TableCell>
                     <TableCell>
                       <DeleteIcon
                         onClick={() => deleteHandler(item.productId.id)}
@@ -160,16 +160,16 @@ function GetCartData() {
               Sub Total :{grandTotal}
             </Typography>
             <hr />
-            <Typography className={classes.subTotal}>GST(5%):500</Typography>
+            <Typography className={classes.subTotal}>GST(5%):{GST}</Typography>
             <hr />
             <Typography className={classes.subTotal}>
               Order Total:{finalTotal}
             </Typography>
             <Button
-              variant="contained"
-              color="primary"
               fullWidth
+              color="primary"
               onClick={buyHandler}
+              variant="contained"
             >
               Proceed to Buy
             </Button>
@@ -189,7 +189,6 @@ function GetCartData() {
                 <Button
                   onClick={() => addressApproveHandler(address?._id)}
                   color="primary"
-                  autoFocus
                 >
                   Finish
                 </Button>

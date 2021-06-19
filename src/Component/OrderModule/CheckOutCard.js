@@ -10,11 +10,9 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 
 import { API } from "../../API/api";
 import GetOrderDetailsStyles from "./GetOrderDetailsStyle";
-import { useHistory } from "react-router";
 
 function CheckOutCard(props) {
   const classes = GetOrderDetailsStyles();
-  const history = useHistory();
   const [address, setAddress] = useState();
   const [addressData, setAddressData] = useState({
     addressLine: "",
@@ -45,7 +43,9 @@ function CheckOutCard(props) {
 
   const cancelHandler = (id) => {
     const onResponse = {
-      success: (res) => {},
+      success: (res) => {
+        listAddress();
+      },
       error: (error) => {},
     };
     API.deleteAddress(onResponse, id);
@@ -55,6 +55,7 @@ function CheckOutCard(props) {
     const onResponse = {
       success: (res) => {
         setAddress(addressData);
+        listAddress();
       },
       error: (error) => {},
     };
@@ -65,8 +66,8 @@ function CheckOutCard(props) {
   const postAddressHandler = () => {
     const onResponse = {
       success: (res) => {
-        console.log("res", res);
-        setAddress(addressData);
+        setAddress(address);
+        listAddress();
       },
       error: (error) => {},
     };
@@ -81,7 +82,6 @@ function CheckOutCard(props) {
   const listAddress = () => {
     const onResponse = {
       success: (res) => {
-        console.log(res.data.address);
         setAddress(res.data.address);
       },
       error: (error) => {},
@@ -92,9 +92,9 @@ function CheckOutCard(props) {
     <div>
       <Paper className={classes.paperAddress}>
         <Typography
-          variant="h5"
-          style={{ fontWeight: "bold" }}
           className={classes.address}
+          style={{ fontWeight: "bold" }}
+          variant="h5"
         >
           Address
         </Typography>
@@ -127,9 +127,9 @@ function CheckOutCard(props) {
               </CardContent>
             </Card>
             <Dialog
+              className={classes.dialogBox}
               open={open}
               onClose={openDialogHandler}
-              className={classes.dialogBox}
             >
               <Paper className={classes.paperEditAddress}>
                 <DialogTitle>Edit Address</DialogTitle>
@@ -219,9 +219,9 @@ function CheckOutCard(props) {
           Add Address
         </Button>
         <Dialog
+          className={classes.dialogBox}
           open={dialog}
           onClose={dialogHandler}
-          className={classes.dialogBox}
         >
           <Paper className={classes.paperEditAddress}>
             <DialogTitle>Add Address</DialogTitle>

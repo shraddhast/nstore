@@ -1,22 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 
 const LoginStyles = makeStyles((theme) => ({
-  paper: {
-    width: "35%",
-    height: "50%",
-    marginLeft: "30%",
-    marginTop: "5%",
-    padding: "2%",
-  },
   emailTextField: {
-    marginTop: "5%",
-  },
-  passwordTextField: {
-    marginTop: "1%",
-  },
-  login: {
-    display: "flex",
-    justifyContent: "flex-start",
     marginTop: "5%",
   },
   errorMessage: {
@@ -24,10 +9,25 @@ const LoginStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "flex-start",
   },
-  registerButton: {
+  forgotPasswordButton: {
     margin: "2%",
   },
-  forgotPasswordButton: {
+  login: {
+    display: "flex",
+    justifyContent: "flex-start",
+    marginTop: "5%",
+  },
+  paper: {
+    width: "35%",
+    height: "50%",
+    marginLeft: "30%",
+    marginTop: "5%",
+    padding: "2%",
+  },
+  passwordTextField: {
+    marginTop: "1%",
+  },
+  registerButton: {
     margin: "2%",
   },
   submitButton: {

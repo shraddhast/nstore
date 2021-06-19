@@ -15,6 +15,7 @@ import ProductCartStyles from "./ProductCartStyle";
 
 function ProductCard(props) {
   const classes = ProductCartStyles();
+  const history = useHistory();
   const {
     mainImage,
     subImagesUrl,
@@ -26,7 +27,7 @@ function ProductCard(props) {
     features,
     id,
   } = props.data;
-  const history = useHistory();
+
   const cardHandleClick = (data) => {
     history.push({
       pathname: `/products/${id}`,
@@ -43,9 +44,9 @@ function ProductCard(props) {
       >
         <CardActionArea>
           <CardMedia
+            alt="Contemplative Reptile"
             className={classes.cardMedia}
             component="img"
-            alt="Contemplative Reptile"
             image={mainImage}
             title="Contemplative Reptile"
           />
@@ -58,8 +59,8 @@ function ProductCard(props) {
         <Button
           className={classes.addCartButton}
           color="secondary"
-          variant="contained"
           size="small"
+          variant="contained"
         >
           Add to Cart
         </Button>

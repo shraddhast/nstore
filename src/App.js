@@ -22,8 +22,6 @@ function App() {
         <Route exact path="/products/:id" component={OpenProduct} />
         <Route exact path="/getCartData" component={GetCartData} />
         <Route exact path="/getOrderDetails" component={GetOrderDetails} />
-        {/* <Route exact path="/checkOut" component={CheckOut} /> */}
-        {/* <Route exact path="/myAccount" component={MyAccount} /> */}
       </Switch>
     </div>
   );

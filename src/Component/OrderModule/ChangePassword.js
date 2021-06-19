@@ -54,7 +54,6 @@ function ChangePassword() {
   const changePassword = () => {
     const onResponse = {
       success: (res) => {
-        console.log(res.success);
         if (res.success) {
           alert("Password Changed successfully");
           history.push("./getOrderDetails");

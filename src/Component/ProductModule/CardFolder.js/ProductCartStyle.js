@@ -1,7 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 
 const ProductCartStyles = makeStyles((theme) => ({
-  addCartButton: {},
   card: {
     marginTop: "10%",
     marginRight: "5%",

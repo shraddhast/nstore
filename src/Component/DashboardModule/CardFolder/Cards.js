@@ -20,10 +20,10 @@ function Cards(props) {
 
   const cardHandler = (data) => {
     history.push({
-      pathname: `/products/:${id}`,
-      value: { data },
+      pathname: `/products/${id}`,
     });
   };
+
   return (
     <Card
       className={classes.root}

@@ -7,9 +7,9 @@ import StarIcon from "@material-ui/icons/Star";
 import { API } from "../../../API/api";
 import Footer from "../../DashboardModule/FooterFolder/Footer";
 import Navbar from "../../DashboardModule/NavbarFolder/Navbar";
-import SideButton from "../SideButtonFolder/SideButton";
 import ProductCard from "../CardFolder.js/ProductCard";
 import ProductStyles from "./ProductStyles";
+import SideButton from "../SideButtonFolder/SideButton";
 
 function Product() {
   const classes = ProductStyles();
@@ -20,9 +20,7 @@ function Product() {
       success: (res) => {
         setProducts(res.data.docs);
       },
-      error: (error) => {
-        console.log(error);
-      },
+      error: (error) => {},
     };
     API.sortRating(onResponse);
   };
@@ -50,7 +48,9 @@ function Product() {
   useEffect(() => {
     const onResponse = {
       success: (res) => {
-        setProducts(res.data.docs);
+        const data = res.data.docs;
+        data.pop();
+        setProducts(data);
       },
       error: (error) => {},
     };
@@ -78,12 +78,11 @@ function Product() {
             </Button>
           </Grid>
 
-          {products &&
-            products.map((data) => (
-              <Grid item xs={12} sm={6} md={4} lg={4}>
-                <ProductCard data={data} />
-              </Grid>
-            ))}
+          {products?.map((data) => (
+            <Grid item xs={12} sm={6} md={4} lg={4}>
+              <ProductCard data={data} />
+            </Grid>
+          ))}
         </Grid>
       </Grid>
       <Footer />

@@ -9,10 +9,10 @@ import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 
 import { API } from "../../../../API/api";
-import SocialMediaLogin from "../../../SocialMediaLogin";
 import Footer from "../../../DashboardModule/FooterFolder/Footer";
-import Navbar from "../../../DashboardModule/NavbarFolder/Navbar";
 import LoginStyles from "./LoginStyles";
+import Navbar from "../../../DashboardModule/NavbarFolder/Navbar";
+import SocialMediaLogin from "../../SocialMediaLogin";
 import validate from "./ValidateLogin";
 
 function Login() {
@@ -47,7 +47,6 @@ function Login() {
   const forgotPasswordHandler = () => {
     const onResponse = {
       success: (res) => {
-        console.log(res);
         if (res.success) {
           history.push("./forgotPassword");
         }
@@ -77,7 +76,6 @@ function Login() {
     const onResponse = {
       success: (res) => {
         localStorage.setItem("token", res.data.token);
-        console.log(res.data.token);
         if (res.success) {
           history.push("./");
         }
@@ -98,14 +96,14 @@ function Login() {
 
           <Typography>
             <TextField
-              variant="outlined"
-              label="Email"
-              size="small"
-              fullWidth
               className={classes.emailTextField}
+              fullWidth
+              label="Email"
               name="email"
-              value={valid.email}
               onChange={changeHandler}
+              size="small"
+              value={valid.email}
+              variant="outlined"
               InputProps={{
                 endAdornment: <EmailIcon />,
               }}
@@ -119,15 +117,15 @@ function Login() {
 
           <Typography>
             <TextField
-              type={visible ? "text" : "password"}
-              variant="outlined"
-              label="Password"
-              size="small"
-              fullWidth
               className={classes.passwordTextField}
+              fullWidth
+              label="Password"
               name="password"
-              value={valid.password}
               onChange={changeHandler}
+              size="small"
+              type={visible ? "text" : "password"}
+              value={valid.password}
+              variant="outlined"
               InputProps={{
                 endAdornment: (
                   <i onClick={visibleHandler} className={classes.eyeIcon}>
@@ -145,10 +143,10 @@ function Login() {
 
           <Typography>
             <Button
-              variant="contained"
-              color="primary"
               className={classes.login}
+              color="primary"
               onClick={loginHandler}
+              variant="contained"
             >
               Login
             </Button>
@@ -182,11 +180,7 @@ function Login() {
           <DialogContent>
             <Typography className={classes.emailId}>
               Email:
-              <TextField
-                //className={classes.}
-                size="small"
-                variant="outlined"
-              />
+              <TextField size="small" variant="outlined" />
             </Typography>
             <Typography>
               <Button

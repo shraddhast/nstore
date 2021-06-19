@@ -1,16 +1,20 @@
 import { makeStyles } from "@material-ui/core";
 
 const OpenProductStyles = makeStyles((theme) => ({
-  image: {
-    height: "250px",
+  addCart: {
     marginTop: "5%",
   },
   grid: {
     marginTop: "5%",
     textAlign: "left",
   },
-  addCart: {
+  image: {
+    height: "250px",
     marginTop: "5%",
+  },
+  img_small: {
+    height: "75px",
+    margin: "5%",
   },
   rateProduct: {
     marginTop: "5%",
@@ -20,18 +24,14 @@ const OpenProductStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
   },
+  tabList: {
+    textAlign: "left",
+  },
   zoom_img: {
     marginTop: "5%",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-  },
-  img_small: {
-    height: "75px",
-    margin: "5%",
-  },
-  tabList: {
-    textAlign: "left",
   },
 }));
 

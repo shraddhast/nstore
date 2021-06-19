@@ -58,7 +58,7 @@ function Register() {
   };
   const registerHandler = (e) => {
     e.preventDefault();
-    //setErrors(validate(valid));
+
     const validError = validate(valid);
     if (Object.keys(validError).length !== 0) {
       setErrors(validError);
@@ -69,13 +69,10 @@ function Register() {
   const register = () => {
     const onResponse = {
       success: (res) => {
-        console.log(res);
         alert("Registration done successfully");
         history.push("./login");
       },
-      error: (error) => {
-        // alert();
-      },
+      error: (error) => {},
     };
     API.register(onResponse, valid);
   };

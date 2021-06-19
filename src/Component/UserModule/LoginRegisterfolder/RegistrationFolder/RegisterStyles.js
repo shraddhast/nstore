@@ -1,12 +1,16 @@
 import { makeStyles } from "@material-ui/core";
 
 const RegisterStyles = makeStyles((theme) => ({
-  paper: {
-    width: "40%",
-    height: "50%",
-    marginLeft: "25%",
-    marginTop: "5%",
-    padding: "2%",
+  confirm_passwordTextField: {
+    marginTop: "2%",
+  },
+  emailTextField: {
+    marginTop: "2%",
+  },
+  errorMessage: {
+    color: "red",
+    display: "flex",
+    justifyContent: "flex-start",
   },
   firstName: {
     marginTop: "2%",
@@ -14,13 +18,14 @@ const RegisterStyles = makeStyles((theme) => ({
   lastName: {
     marginTop: "2%",
   },
-  emailTextField: {
-    marginTop: "2%",
+  paper: {
+    width: "40%",
+    height: "50%",
+    marginLeft: "25%",
+    marginTop: "5%",
+    padding: "2%",
   },
   passwordTextField: {
-    marginTop: "2%",
-  },
-  confirm_passwordTextField: {
     marginTop: "2%",
   },
   phoneNumber: {
@@ -34,11 +39,6 @@ const RegisterStyles = makeStyles((theme) => ({
     justifyContent: "flex-start",
     marginLeft: "2%",
     marginTop: "5%",
-  },
-  errorMessage: {
-    color: "red",
-    display: "flex",
-    justifyContent: "flex-start",
   },
 }));
 

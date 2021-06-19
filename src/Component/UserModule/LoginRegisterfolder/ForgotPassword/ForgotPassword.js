@@ -54,12 +54,7 @@ function ForgotPassword() {
 
   function resetPassword() {
     const onResponse = {
-      success: (res) => {
-        console.log("res", res.success);
-        if (res.success) {
-          console.log(res);
-        }
-      },
+      success: (res) => {},
       error: (error) => {
         alert(error);
       },
@@ -74,7 +69,7 @@ function ForgotPassword() {
         <hr />
         <Typography className={classes.alert}>
           <Typography className={classes.alertMessage}>
-            <InfoIcon className={classes.icon} />
+            {/* <InfoIcon className={classes.icon} /> */}
             Verification code has been send to your register email id
           </Typography>
         </Typography>

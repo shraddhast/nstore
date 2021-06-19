@@ -7,10 +7,11 @@ import {
   PinterestShareButton,
 } from "react-share";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import { useHistory } from "react-router";
 import ReactImageZoom from "react-image-zoom";
 import "react-tabs/style/react-tabs.css";
 
-import { AppBar, Button, Grid, Paper, Typography } from "@material-ui/core";
+import { Button, Grid, Paper, Typography } from "@material-ui/core";
 import EmailIcon from "@material-ui/icons/Email";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import PinterestIcon from "@material-ui/icons/Pinterest";
@@ -23,7 +24,6 @@ import Footer from "../DashboardModule/FooterFolder/Footer";
 import Navbar from "../DashboardModule/NavbarFolder/Navbar";
 import OpenProductStyles from "./OpenProductStyle";
 import Rating from "@material-ui/lab/Rating";
-import { useHistory } from "react-router";
 
 function OpenProduct(props) {
   const classes = OpenProductStyles();
@@ -44,17 +44,20 @@ function OpenProduct(props) {
   const history = useHistory();
 
   const addCartHandler = () => {
-    history.push({
-      pathname: "/getCartData",
-    });
     addToCart();
   };
   const addToCart = () => {
     const onResponse = {
       success: (res) => {
-        console.log(res);
+        history.push({
+          pathname: "/getCartData",
+        });
       },
-      error: (error) => {},
+      error: (error) => {
+        history.push({
+          pathname: "/getCartData",
+        });
+      },
     };
     const params = {
       productId: id,
@@ -87,8 +90,8 @@ function OpenProduct(props) {
             <img
               alt="main product"
               height="250px"
-              src={imageVal}
               marginTop="500px"
+              src={imageVal}
               width="400px"
             />
           </div>
@@ -150,17 +153,17 @@ function OpenProduct(props) {
           </Typography>
 
           <Button
-            variant="contained"
-            color="primary"
             className={classes.addCart}
+            color="primary"
             onClick={() => addCartHandler()}
+            variant="contained"
           >
             Add to cart
           </Button>
           <Button
-            variant="contained"
-            color="secondary"
             className={classes.rateProduct}
+            color="secondary"
+            variant="contained"
           >
             Rate product
           </Button>

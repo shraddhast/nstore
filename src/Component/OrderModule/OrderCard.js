@@ -16,7 +16,7 @@ function OrderCard() {
   useEffect(() => {
     const onResponse = {
       success: (res) => {
-        setProducts(res.data.orders.pop().items.pop().productId);
+        setProducts(res.data.orders.pop().items);
       },
       error: (error) => {},
     };
@@ -24,31 +24,34 @@ function OrderCard() {
   }, []);
   return (
     <div>
-      <Card className={classes.cardRoot}>
-        <CardActionArea>
-          <CardContent className={classes.cardContent}>
-            <Typography>
-              <span className={classes.transit}>TRANSIT</span>
-            </Typography>
-            <Typography>
-              Placed on:{products?.createdAt} / Price:{products?.price}
-            </Typography>
-            <hr />
-            <CardMedia
-              component="img"
-              className={classes.cardImage}
-              alt="Contemplative Reptile"
-              image={products?.mainImage}
-            />
-            <hr />
-          </CardContent>
-        </CardActionArea>
-        <CardActions>
-          <Button variant="contained" size="small" color="primary">
-            Download
-          </Button>
-        </CardActions>
-      </Card>
+      {products?.map((product) => (
+        <Card className={classes.cardRoot}>
+          <CardActionArea>
+            <CardContent className={classes.cardContent}>
+              <Typography>
+                <span className={classes.transit}>TRANSIT</span>
+              </Typography>
+              <Typography>
+                Placed on:{product.productId.createdAt} / Price:
+                {product.productId.price}
+              </Typography>
+              <hr />
+              <CardMedia
+                component="img"
+                className={classes.cardImage}
+                alt="Contemplative Reptile"
+                image={product.productId.mainImage}
+              />
+              <hr />
+            </CardContent>
+          </CardActionArea>
+          <CardActions>
+            <Button variant="contained" size="small" color="primary">
+              Download
+            </Button>
+          </CardActions>
+        </Card>
+      ))}
     </div>
   );
 }

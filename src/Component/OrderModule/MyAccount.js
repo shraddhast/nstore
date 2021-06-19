@@ -64,17 +64,17 @@ function AccountCard() {
 
         <hr />
         <Button
-          variant="outlined"
-          startIcon={<EditIcon />}
           onClick={dialogHandler}
+          startIcon={<EditIcon />}
+          variant="outlined"
         >
           Edit
         </Button>
 
         <Dialog
+          className={classes.dialogBox}
           open={open}
           onClose={dialogHandler}
-          className={classes.dialogBox}
         >
           <DialogTitle>Profile Details</DialogTitle>
           <DialogContent>
@@ -146,9 +146,9 @@ function AccountCard() {
             </Typography>
             <Typography>
               <Button
-                variant="contained"
                 color="primary"
                 onClick={submitEdited}
+                variant="contained"
               >
                 Submit
               </Button>

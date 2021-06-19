@@ -39,6 +39,17 @@ function Navbar() {
   const cartHandler = () => {
     history.push("/getCartData");
   };
+
+  const isLogged = localStorage.getItem("token");
+  const loginHandler = () => {
+    history.push("./login");
+  };
+  const logoutHandler = () => {
+    localStorage.setItem("token", "");
+  };
+  const registerHandler = () => {
+    history.push("./register");
+  };
   return (
     <div>
       <div className={classes.root}>
@@ -62,9 +73,9 @@ function Navbar() {
             </Typography>
 
             <InputBase
+              className={classes.inputBase}
               placeholder="Search…"
               startAdornment={<SearchIcon />}
-              className={classes.inputBase}
             />
 
             <Button
@@ -77,23 +88,24 @@ function Navbar() {
 
             <Button
               className={classes.buttonProfile}
+              endIcon={<KeyboardArrowDownIcon />}
               onClick={handleClick}
               startIcon={<AccountBoxIcon />}
-              endIcon={<KeyboardArrowDownIcon />}
             ></Button>
             <Menu
-              id="simple-menu"
               anchorEl={dropdown}
+              id="simple-menu"
               keepMounted
               open={Boolean(dropdown)}
               onClose={handleClose}
             >
-              <Link to="/login">
-                <MenuItem>Login</MenuItem>
-              </Link>
-              <Link to="/register">
-                <MenuItem>Register</MenuItem>
-              </Link>
+              {isLogged ? (
+                <MenuItem onClick={logoutHandler}>LogOut</MenuItem>
+              ) : (
+                <MenuItem onClick={loginHandler}>Login</MenuItem>
+              )}
+
+              <MenuItem onClick={registerHandler}>Register</MenuItem>
             </Menu>
           </Toolbar>
         </AppBar>

@@ -51,10 +51,10 @@ function GetOrderDetails() {
     setCheckOut(false);
     setChangePassword(true);
   };
+
   const listAddress = () => {
     const onResponse = {
       success: (res) => {
-        console.log("res", res.data.address);
         setGetAddress(res.data.address);
       },
       error: (error) => {},
@@ -78,11 +78,11 @@ function GetOrderDetails() {
           <Typography>Shraddha</Typography>
           <Typography>
             <Button
-              variant="outlined"
-              fullWidth
-              startIcon={<ReorderIcon />}
               className={classes.button}
+              fullWidth
               onClick={orderHandler}
+              startIcon={<ReorderIcon />}
+              variant="outlined"
             >
               Order
             </Button>
@@ -100,22 +100,22 @@ function GetOrderDetails() {
           </Typography>
           <Typography>
             <Button
-              variant="outlined"
-              fullWidth
-              startIcon={<HomeIcon />}
               className={classes.button}
+              fullWidth
               onClick={checkOutHandler}
+              startIcon={<HomeIcon />}
+              variant="outlined"
             >
               Address
             </Button>
           </Typography>
           <Typography>
             <Button
-              variant="outlined"
-              fullWidth
-              startIcon={<SyncAltIcon />}
               className={classes.button}
+              fullWidth
               onClick={passwordHandler}
+              startIcon={<SyncAltIcon />}
+              variant="outlined"
             >
               Change Password
             </Button>
