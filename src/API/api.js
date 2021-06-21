@@ -11,12 +11,13 @@ import {
   SORT_HIGH_PRICE,
   LIST_CATEGORY,
   CATEGORY,
-  COLOR,
+  LIST_COLOR,
   ADDRESS,
   UPDATE_ADDRESS,
   DELETE_ADDRESS,
   PRODUCTS_CART,
   REMOVE_PRODUCT_CART,
+  UPDATE_PRODUCT_CART,
   PRODUCT_ID,
   PLACE_ORDER,
   GET_ORDER_LIST,
@@ -64,12 +65,17 @@ export const API = {
     const url = CATEGORY;
     return request(onResponse, url, {}, params, "GET");
   },
+  getProductsByColor: (onResponse, params) => {
+    const url = CATEGORY;
+    return request(onResponse, url, {}, params, "GET");
+  },
   category: (onResponse, data) => {
     const url = LIST_CATEGORY;
     return request(onResponse, url, {}, {}, "GET");
   },
+
   color: (onResponse, data) => {
-    const url = COLOR;
+    const url = LIST_COLOR;
     return request(onResponse, url, {}, {}, "GET");
   },
   listAddress: (onResponse) => {
@@ -80,9 +86,9 @@ export const API = {
     const url = ADDRESS;
     return request(onResponse, url, data, {}, "POST");
   },
-  updateAddress: (onResponse, id, data) => {
+  updateAddress: (onResponse, data, id) => {
     const url = `${UPDATE_ADDRESS}/${id}`;
-    return request(onResponse, url, id, data, "PUT");
+    return request(onResponse, url, data, id, "PUT");
   },
   deleteAddress: (onResponse, id) => {
     const url = `${DELETE_ADDRESS}/${id}`;
@@ -100,6 +106,11 @@ export const API = {
     const url = `${REMOVE_PRODUCT_CART}/${id}`;
     return request(onResponse, url, {}, {}, "DELETE");
   },
+  updateFromCart: (onResponse, data, id) => {
+    const url = `${UPDATE_PRODUCT_CART}/${id}`;
+    return request(onResponse, url, data, {}, "PUT");
+  },
+
   singleProduct: (onResponse, id) => {
     const url = `${PRODUCT_ID}/${id}`;
     return request(onResponse, url, {}, {}, "GET");

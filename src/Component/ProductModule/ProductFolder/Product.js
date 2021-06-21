@@ -9,7 +9,7 @@ import Footer from "../../DashboardModule/FooterFolder/Footer";
 import Navbar from "../../DashboardModule/NavbarFolder/Navbar";
 import ProductCard from "../CardFolder.js/ProductCard";
 import ProductStyles from "./ProductStyles";
-import SideButton from "../SideButtonFolder/SideButton";
+import SideButton from "../CategoryColorSelectionFolder/SideButton";
 
 function Product() {
   const classes = ProductStyles();

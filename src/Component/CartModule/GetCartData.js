@@ -16,25 +16,22 @@ import {
   TableBody,
   Typography,
 } from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import DeleteIcon from "@material-ui/icons/Delete";
-import RemoveIcon from "@material-ui/icons/Remove";
 
 import { API } from "../../API/api";
 import Footer from "../DashboardModule/FooterFolder/Footer";
 import GetCartDataStyles from "./GetCartDataStyles";
 import Navbar from "../DashboardModule/NavbarFolder/Navbar";
+import ProductTable from "./ProductTable";
 
 function GetCartData() {
   const classes = GetCartDataStyles();
   const history = useHistory();
   const [address, setAddress] = useState();
-  const [count, setCount] = useState(1);
   const [dialog, setDialog] = useState(false);
   const [grandTotal, setGrandTotal] = useState();
   const [products, setProducts] = useState([]);
@@ -43,12 +40,6 @@ function GetCartData() {
 
   const dialogHandler = () => {
     setDialog(dialog ? false : true);
-  };
-  const Decrement = () => {
-    setCount(count - 1);
-  };
-  const Increment = () => {
-    setCount(count + 1);
   };
 
   const deleteHandler = (id) => {
@@ -123,30 +114,7 @@ function GetCartData() {
               </TableHead>
               <TableBody>
                 {products?.map((item) => (
-                  <TableRow>
-                    <TableCell className={classes.imageCell}>
-                      <img
-                        height="40px"
-                        src={item.productId.mainImage}
-                        style={{ marginRight: "2%" }}
-                        width="40px"
-                      />
-                      {item.productId.name} <br />
-                      Status:In Stock
-                    </TableCell>
-                    <TableCell className={classes.tableHead}>
-                      <Button onClick={Decrement} startIcon={<RemoveIcon />} />
-                      <input value={count} style={{ width: "9px" }} />
-                      <Button onClick={Increment} startIcon={<AddIcon />} />
-                    </TableCell>
-                    <TableCell>{item.productId.price}</TableCell>
-                    <TableCell>{item.productId.price}</TableCell>
-                    <TableCell>
-                      <DeleteIcon
-                        onClick={() => deleteHandler(item.productId.id)}
-                      />
-                    </TableCell>
-                  </TableRow>
+                  <ProductTable deleteHandler={deleteHandler} item={item} />
                 ))}
               </TableBody>
             </Table>

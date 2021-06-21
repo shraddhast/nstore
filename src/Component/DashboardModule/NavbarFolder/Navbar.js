@@ -47,6 +47,9 @@ function Navbar() {
   const logoutHandler = () => {
     localStorage.setItem("token", "");
   };
+  const resetPasswordHandler = () => {
+    history.push("./getOrderDetails");
+  };
   const registerHandler = () => {
     history.push("./register");
   };
@@ -100,12 +103,18 @@ function Navbar() {
               onClose={handleClose}
             >
               {isLogged ? (
-                <MenuItem onClick={logoutHandler}>LogOut</MenuItem>
+                <>
+                  <MenuItem onClick={logoutHandler}>LogOut</MenuItem>
+                  <MenuItem onClick={resetPasswordHandler}>
+                    Reset Password
+                  </MenuItem>
+                </>
               ) : (
-                <MenuItem onClick={loginHandler}>Login</MenuItem>
+                <>
+                  <MenuItem onClick={loginHandler}>Login</MenuItem>
+                  <MenuItem onClick={registerHandler}>Register</MenuItem>
+                </>
               )}
-
-              <MenuItem onClick={registerHandler}>Register</MenuItem>
             </Menu>
           </Toolbar>
         </AppBar>

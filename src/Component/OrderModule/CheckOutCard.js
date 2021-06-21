@@ -54,7 +54,7 @@ function CheckOutCard(props) {
   const editHandler = (id) => {
     const onResponse = {
       success: (res) => {
-        setAddress(addressData);
+        setAddress(address);
         listAddress();
       },
       error: (error) => {},

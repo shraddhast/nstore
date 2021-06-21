@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { format } from "date-fns";
 import { Button, Grid, Typography } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -22,36 +23,45 @@ function OrderCard() {
     };
     API.getOrderPlace(onResponse);
   }, []);
+
   return (
     <div>
-      {products?.map((product) => (
-        <Card className={classes.cardRoot}>
-          <CardActionArea>
-            <CardContent className={classes.cardContent}>
-              <Typography>
-                <span className={classes.transit}>TRANSIT</span>
-              </Typography>
-              <Typography>
-                Placed on:{product.productId.createdAt} / Price:
-                {product.productId.price}
-              </Typography>
-              <hr />
-              <CardMedia
-                component="img"
-                className={classes.cardImage}
-                alt="Contemplative Reptile"
-                image={product.productId.mainImage}
-              />
-              <hr />
-            </CardContent>
-          </CardActionArea>
-          <CardActions>
-            <Button variant="contained" size="small" color="primary">
-              Download
-            </Button>
-          </CardActions>
-        </Card>
-      ))}
+      {products?.map((product) => {
+        const newDate = product.productId.updatedAt;
+        const formattedDate = format(
+          new Date(newDate),
+          "dd/MM/yyyy kk:mm:ss aaaa"
+        );
+
+        return (
+          <Card className={classes.cardRoot}>
+            <CardActionArea>
+              <CardContent className={classes.cardContent}>
+                <Typography>
+                  <span className={classes.transit}>TRANSIT</span>
+                </Typography>
+                <Typography>
+                  Placed on:{formattedDate} / Price:
+                  {product.productId.price}
+                </Typography>
+                <hr />
+                <CardMedia
+                  component="img"
+                  className={classes.cardImage}
+                  alt="Contemplative Reptile"
+                  image={product.productId.mainImage}
+                />
+                <hr />
+              </CardContent>
+            </CardActionArea>
+            <CardActions>
+              <Button variant="contained" size="small" color="primary">
+                Download
+              </Button>
+            </CardActions>
+          </Card>
+        );
+      })}
     </div>
   );
 }

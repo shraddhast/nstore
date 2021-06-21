@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Suspense, lazy } from "react";
 import { Button, Grid, Typography } from "@material-ui/core";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import HomeIcon from "@material-ui/icons/Home";
@@ -6,13 +7,14 @@ import ReorderIcon from "@material-ui/icons/Reorder";
 import SyncAltIcon from "@material-ui/icons/SyncAlt";
 
 import { API } from "../../API/api";
-import CheckOutCard from "./CheckOutCard";
-import ChangePassword from "./ChangePassword";
+
 import Footer from "../DashboardModule/FooterFolder/Footer";
 import GetOrderDetailsStyles from "./GetOrderDetailsStyle";
-import MyAccount from "./MyAccount";
 import Navbar from "../DashboardModule/NavbarFolder/Navbar";
-import OrderCard from "../OrderModule/OrderCard";
+const CheckOutCard = lazy(() => import("./CheckOutCard"));
+const ChangePassword = lazy(() => import("./ChangePassword"));
+const MyAccount = lazy(() => import("./MyAccount"));
+const OrderCard = lazy(() => import("../OrderModule/OrderCard"));
 
 function GetOrderDetails() {
   const classes = GetOrderDetailsStyles();
@@ -122,10 +124,16 @@ function GetOrderDetails() {
           </Typography>
         </Grid>
         <Grid item sm={6} md={6} lg={8}>
-          {order ? <OrderCard /> : null}
-          {profile ? <MyAccount /> : null}
-          {checkOut ? <CheckOutCard getAddress={getAddress} /> : null}
-          {changePassword ? <ChangePassword /> : null}
+          <Suspense fallback={<>"...Loading"</>}>
+            {order ? (
+              <Suspense fallback={<>"....loading"</>}>
+                <OrderCard />
+              </Suspense>
+            ) : null}
+            {profile ? <MyAccount /> : null}
+            {checkOut ? <CheckOutCard getAddress={getAddress} /> : null}
+            {changePassword ? <ChangePassword /> : null}
+          </Suspense>
         </Grid>
       </Grid>
       <Footer />

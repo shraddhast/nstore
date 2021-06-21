@@ -11,7 +11,7 @@ export const LIST_CATEGORY = `${BASE_URL}/api/category`;
 export const LIST_COLOR = `${BASE_URL}/api/color`;
 
 export const PRODUCTS_CART = `${BASE_URL}/api/cart`;
-export const UPDATE_PRODUCT_CART = `${BASE_URL}/api/cart/606d6768653a8531866b5575`;
+export const UPDATE_PRODUCT_CART = `${BASE_URL}/api/cart`;
 export const REMOVE_PRODUCT_CART = `${BASE_URL}/api/cart`;
 
 export const LIST_PRODUCT = `${BASE_URL}/api/product`;

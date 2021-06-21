@@ -17,6 +17,7 @@ function SideButton() {
   const classes = SideButtonStyles();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [color, setColor] = useState([]);
 
   const allProductHandler = () => {
     const onResponse = {
@@ -37,6 +38,15 @@ function SideButton() {
     };
     API.category(onResponse);
   };
+  const getColor = () => {
+    const onResponse = {
+      success: (res) => {
+        setColor(res.data);
+      },
+      error: (error) => {},
+    };
+    API.color(onResponse);
+  };
 
   const getProductsByCategory = (category) => {
     const onResponse = {
@@ -45,15 +55,27 @@ function SideButton() {
       },
       error: (error) => {},
     };
-
     const params = {
       category: category._id,
     };
     API.getProductsByCategory(onResponse, params);
   };
+  const getProductsByColor = (category) => {
+    const onResponse = {
+      success: (res) => {
+        setProducts(res.data.docs);
+      },
+      error: (error) => {},
+    };
+    const params = {
+      category: category._id,
+    };
+    API.getProductsByColor(onResponse, params);
+  };
 
   useEffect(() => {
     getCategories();
+    getColor();
   }, []);
   return (
     <div>
@@ -79,12 +101,13 @@ function SideButton() {
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography>Colours</Typography>
           </AccordionSummary>
-          <Typography>
-            <Button>Black</Button>
-          </Typography>
-          <Typography>
-            <Button>Blue</Button>
-          </Typography>
+          {color?.map((color) => (
+            <Typography>
+              <Button onClick={() => getProductsByColor(color)}>
+                {color.name}
+              </Button>
+            </Typography>
+          ))}
         </Accordion>
       </Typography>
     </div>
