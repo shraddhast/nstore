@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
@@ -9,6 +10,7 @@ import {
   Menu,
 } from "@material-ui/core";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
+import Badge from "@material-ui/core/Badge";
 import InputBase from "@material-ui/core/InputBase";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import SearchIcon from "@material-ui/icons/Search";
@@ -19,6 +21,8 @@ import NavbarStyles from "./NavbarStyles";
 function Navbar() {
   const classes = NavbarStyles();
   const history = useHistory();
+  const count = useSelector((state) => state.cartReducer);
+  console.log(count.state);
   const [dropdown, setDropdown] = useState(null);
 
   const handleClick = (event) => {
@@ -46,6 +50,7 @@ function Navbar() {
   };
   const logoutHandler = () => {
     localStorage.setItem("token", "");
+    history.push("./login");
   };
   const resetPasswordHandler = () => {
     history.push("./getOrderDetails");
@@ -53,6 +58,7 @@ function Navbar() {
   const registerHandler = () => {
     history.push("./register");
   };
+
   return (
     <div>
       <div className={classes.root}>
@@ -81,13 +87,15 @@ function Navbar() {
               startAdornment={<SearchIcon />}
             />
 
-            <Button
-              className={classes.buttonCart}
-              onClick={cartHandler}
-              startIcon={<ShoppingCartIcon />}
-            >
-              Cart
-            </Button>
+            <Badge badgeContent={count.state} color="primary">
+              <Button
+                className={classes.buttonCart}
+                onClick={cartHandler}
+                startIcon={<ShoppingCartIcon />}
+              >
+                Cart
+              </Button>
+            </Badge>
 
             <Button
               className={classes.buttonProfile}

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import addNotification from "react-push-notification";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import {
   Button,
@@ -23,14 +25,17 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 import { API } from "../../API/api";
+import cartArray from "../../Redux/Action";
 import Footer from "../DashboardModule/FooterFolder/Footer";
 import GetCartDataStyles from "./GetCartDataStyles";
 import Navbar from "../DashboardModule/NavbarFolder/Navbar";
 import ProductTable from "./ProductTable";
+import PaymentMode from "./PaymentMode";
 
 function GetCartData() {
   const classes = GetCartDataStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
   const [address, setAddress] = useState();
   const [dialog, setDialog] = useState(false);
   const [grandTotal, setGrandTotal] = useState();
@@ -38,24 +43,45 @@ function GetCartData() {
   const GST = (5 / 100) * grandTotal;
   const finalTotal = grandTotal + GST;
 
+  const addressApproveHandler = (id) => {
+    const onResponse = {
+      success: (res) => {
+        addNotification({
+          title: "NEOSTORE",
+          subtitle: "ORDER",
+          message: "Order has been successfully placed",
+          theme: "darkblue",
+          //native: "true",
+        });
+        history.push("./getOrderDetails");
+      },
+      error: (error) => {},
+    };
+    API.orderPlace(onResponse, { addressId: id });
+    setDialog(false);
+  };
+  const buyHandler = () => {
+    dialogHandler();
+    listAddress();
+  };
   const dialogHandler = () => {
     setDialog(dialog ? false : true);
   };
-
   const deleteHandler = (id) => {
     const onResponse = {
       success: (res) => {
         setProducts(products.filter((product) => product.productId.id !== id));
+        console.log(res, "delete response");
       },
       error: (error) => {},
     };
     API.deleteFromCart(onResponse, id);
   };
-
-  const buyHandler = () => {
-    dialogHandler();
-    listAddress();
+  const googlePayHandler = () => {
+    <PaymentMode />;
+    console.log("payment");
   };
+
   const listAddress = () => {
     const onResponse = {
       success: (res) => {
@@ -67,38 +93,22 @@ function GetCartData() {
     API.listAddress(onResponse);
   };
 
-  const addressApproveHandler = (id) => {
-    const onResponse = {
-      success: (res) => {
-        history.push("./getOrderDetails");
-      },
-      error: (error) => {},
-    };
-    API.orderPlace(onResponse, { addressId: id });
-    setDialog(false);
-  };
-
   useEffect(() => {
     const onResponse = {
       success: (res) => {
         setProducts(res.data.products);
+        dispatch(cartArray(res.data.products.length));
         setGrandTotal(res.data.grandTotal);
       },
       error: (error) => {},
     };
     API.getFromCart(onResponse);
   }, []);
+
   return (
     <div>
       <Navbar />
-      <Stepper>
-        <Step>
-          <StepLabel>Cart</StepLabel>
-        </Step>
-        <Step>
-          <StepLabel>Delivery Address</StepLabel>
-        </Step>
-      </Stepper>
+
       <Grid container spacing={5} className={classes.rootGrid}>
         <Grid item xs={12} sm={8} md={8} lg={8}>
           <TableContainer component={Paper}>
@@ -145,20 +155,23 @@ function GetCartData() {
               <DialogTitle>Address</DialogTitle>
               <DialogContent>
                 <DialogContentText id="alert-dialog-description">
-                  {address?.addressLine}, {address?.pincode},{address?.city},
-                  {address?.state},{address?.country}
+                  <Typography>Address:{address?.addressLine}</Typography>
+                  <Typography>PinCode:{address?.pincode}</Typography>
+                  <Typography>City:{address?.city},</Typography>
+                  <Typography>State:{address?.state}</Typography>
+                  <Typography>Country:{address?.country}</Typography>
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
                 <Button onClick={dialogHandler} color="primary">
                   Cancel
                 </Button>
-                {console.log(address?._id)}
+                <PaymentMode />
                 <Button
                   onClick={() => addressApproveHandler(address?._id)}
                   color="primary"
                 >
-                  Finish
+                  COD and Finish
                 </Button>
               </DialogActions>
             </Dialog>

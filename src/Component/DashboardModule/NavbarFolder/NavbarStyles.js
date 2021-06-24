@@ -4,10 +4,13 @@ const NavbarStyles = makeStyles((theme) => ({
   appBar: {
     background: "black",
   },
+  button: {
+    flexGrow: 1,
+  },
   buttonCart: {
     background: "white",
     color: "black",
-    marginLeft: "1%",
+    marginLeft: "10px",
     "&:hover": {
       background: "white",
       color: "black",
@@ -17,19 +20,17 @@ const NavbarStyles = makeStyles((theme) => ({
     background: "white",
     color: "black",
     marginLeft: "1%",
-    padding: "8px",
+    padding: "10px",
     "&:hover": {
       color: "black",
       background: "white",
     },
   },
-  button: {
-    flexGrow: 1,
-  },
   inputBase: {
     background: "white",
     borderRadius: "2px",
     color: "black",
+    height: "35px",
     width: "20%",
   },
   neoStore: {

@@ -1,7 +1,10 @@
 import "./App.css";
-import { Switch, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
+import { Switch, Route } from "react-router-dom";
+import { Notifications } from "react-push-notification";
 
+import Lazy from "./Lazy";
+import PushNotification from "./Component/PushNotification";
 const Dashboard = lazy(() => import("./Component/DashboardModule/Dashboard"));
 const ForgotPassword = lazy(() =>
   import(
@@ -32,8 +35,10 @@ const OrderModuleProtectedRoute = lazy(() =>
 function App() {
   return (
     <div className="App">
-      <Suspense fallback={<div> please wait.....</div>}>
+      <Notifications />
+      <Suspense fallback={<Lazy />}>
         <Switch>
+          <Route exact path="/notification" component={PushNotification} />
           <Route exact path="/" component={Dashboard} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />

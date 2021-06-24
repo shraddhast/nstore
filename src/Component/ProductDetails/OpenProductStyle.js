@@ -16,6 +16,9 @@ const OpenProductStyles = makeStyles((theme) => ({
     height: "75px",
     margin: "5%",
   },
+  mainImg: {
+    marginTop: "10%",
+  },
   rateProduct: {
     marginTop: "5%",
     marginLeft: "5%",
@@ -25,7 +28,7 @@ const OpenProductStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   tabList: {
-    textAlign: "left",
+    textAlign: "center",
   },
   zoom_img: {
     marginTop: "5%",

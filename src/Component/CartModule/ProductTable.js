@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, TableCell, TableRow } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -11,14 +12,18 @@ function ProductTable(props) {
   const classes = GetCartDataStyles();
   const [count, setCount] = useState(1);
   const { deleteHandler, item } = props;
+
   const Decrement = (id) => {
-    setCount(count - 1);
+    if (count > 1) {
+      setCount(count - 1);
+    }
     const onResponse = {
       success: (res) => {
         console.log(res);
       },
       error: (error) => {},
     };
+
     API.updateFromCart(onResponse, { quantity: count }, id);
   };
   const Increment = (id) => {
@@ -56,7 +61,7 @@ function ProductTable(props) {
         />
       </TableCell>
       <TableCell>{item.productId.price}</TableCell>
-      <TableCell>{item.productId.price}</TableCell>
+      <TableCell>{item.totalAmount * count}</TableCell>
       <TableCell>
         <DeleteIcon onClick={() => deleteHandler(item.productId.id)} />
       </TableCell>

@@ -44,7 +44,6 @@ export const API = {
     const url = CHANGE_PASSWORD;
     return request(onResponse, url, data, {}, "POST");
   },
-
   listProduct: (onResponse, data) => {
     const url = LIST_PRODUCT;
     return request(onResponse, url, {}, {}, "GET");
@@ -73,7 +72,6 @@ export const API = {
     const url = LIST_CATEGORY;
     return request(onResponse, url, {}, {}, "GET");
   },
-
   color: (onResponse, data) => {
     const url = LIST_COLOR;
     return request(onResponse, url, {}, {}, "GET");
@@ -124,4 +122,3 @@ export const API = {
     return request(onResponse, url, data, {}, "POST");
   },
 };
-//export default API;

@@ -7,11 +7,13 @@ import {
   PinterestShareButton,
 } from "react-share";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import { useHistory } from "react-router";
-import ReactImageZoom from "react-image-zoom";
 import "react-tabs/style/react-tabs.css";
+import { useHistory } from "react-router";
 
 import { Button, Grid, Paper, Typography } from "@material-ui/core";
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import EmailIcon from "@material-ui/icons/Email";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import PinterestIcon from "@material-ui/icons/Pinterest";
@@ -41,7 +43,13 @@ function OpenProduct(props) {
 
   const [imageVal, setImageVal] = useState("");
   const [tab, setTab] = useState(0);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [ratingValue, setRatingValue] = useState(0);
   const history = useHistory();
+
+  const rateProductHandler = () => {
+    setOpenDialog(openDialog ? false : true);
+  };
 
   const addCartHandler = () => {
     addToCart();
@@ -88,9 +96,9 @@ function OpenProduct(props) {
         <Grid item lg={6}>
           <div className={classes.imageGrid}>
             <img
+              className={classes.mainImg}
               alt="main product"
               height="250px"
-              marginTop="500px"
               src={imageVal}
               width="400px"
             />
@@ -122,7 +130,7 @@ function OpenProduct(props) {
           </Typography>
           <hr />
           <Typography> Price:{price}</Typography>
-          <Typography>Color:</Typography>
+          <Typography>Color:Black</Typography>
           <Typography className={classes.share}>
             Share: <ShareIcon />
           </Typography>
@@ -163,24 +171,34 @@ function OpenProduct(props) {
           <Button
             className={classes.rateProduct}
             color="secondary"
+            onClick={rateProductHandler}
             variant="contained"
           >
             Rate product
           </Button>
+          <Dialog open={openDialog} onClose={rateProductHandler}>
+            <DialogTitle>Rate the Product</DialogTitle>
+            <DialogContent>
+              <Rating
+                name="simple-controlled"
+                value={ratingValue}
+                onChange={(event, newValue) => {
+                  setRatingValue(newValue);
+                }}
+              />
+            </DialogContent>
+          </Dialog>
         </Grid>
       </Grid>
 
-      <Grid container>
-        <Tabs selectedIndex={tab} onSelect={(index) => setTab(index)}>
-          <TabList className={classes.tabList}>
-            <Tab> Description </Tab>
-            <Tab> Features </Tab>
-            <hr />
-          </TabList>
-          <TabPanel>{description}</TabPanel>
-          <TabPanel>{features}</TabPanel>
-        </Tabs>
-      </Grid>
+      <Tabs selectedIndex={tab} onSelect={(index) => setTab(index)}>
+        <TabList>
+          <Tab> Description </Tab>
+          <Tab> Features </Tab>
+        </TabList>
+        <TabPanel>{description}</TabPanel>
+        <TabPanel>{features}</TabPanel>
+      </Tabs>
 
       <Footer />
     </div>
