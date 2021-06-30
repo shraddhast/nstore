@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router";
 import {
   Card,
   CardActionArea,
@@ -7,10 +8,8 @@ import {
   Button,
   Typography,
 } from "@material-ui/core";
-import { useHistory } from "react-router";
 import Rating from "@material-ui/lab/Rating";
 
-import { API } from "../../../API/api";
 import ProductCartStyles from "./ProductCartStyle";
 
 function ProductCard(props) {

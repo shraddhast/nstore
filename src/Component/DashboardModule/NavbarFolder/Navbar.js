@@ -25,6 +25,10 @@ function Navbar() {
   console.log(count.state);
   const [dropdown, setDropdown] = useState(null);
 
+  const cartHandler = () => {
+    // useHistory() Hook
+    history.push("/getCartData");
+  };
   const handleClick = (event) => {
     setDropdown(event.currentTarget);
   };
@@ -34,14 +38,12 @@ function Navbar() {
   const homeHandler = () => {
     history.push("./");
   };
-  const productHandler = () => {
-    history.push("./commonProducts");
-  };
   const orderHandler = () => {
     history.push("./getOrderDetails");
   };
-  const cartHandler = () => {
-    history.push("/getCartData");
+  const productHandler = () => {
+    // useHistory() Hook
+    history.push("./commonProducts");
   };
 
   const isLogged = localStorage.getItem("token");
@@ -50,6 +52,7 @@ function Navbar() {
   };
   const logoutHandler = () => {
     localStorage.setItem("token", "");
+
     history.push("./login");
   };
   const resetPasswordHandler = () => {
@@ -60,73 +63,71 @@ function Navbar() {
   };
 
   return (
-    <div>
-      <div className={classes.root}>
-        <AppBar position="static" className={classes.appBar}>
-          <Toolbar>
-            <Typography variant="h6" className={classes.neoStore}>
-              Neo
-              <span className={classes.store}>STORE</span>
-            </Typography>
+    <div className={classes.root}>
+      <AppBar position="static" className={classes.appBar}>
+        <Toolbar>
+          <Typography variant="h6" className={classes.neoStore}>
+            Neo
+            <span className={classes.store}>STORE</span>
+          </Typography>
 
-            <Typography variant="button" className={classes.button}>
-              <Button color="inherit" onClick={homeHandler}>
-                Home
-              </Button>
-              <Button color="inherit" onClick={productHandler}>
-                Products
-              </Button>
-              <Button color="inherit" onClick={orderHandler}>
-                Orders
-              </Button>
-            </Typography>
+          <Typography variant="button" className={classes.button}>
+            <Button color="inherit" onClick={homeHandler}>
+              Home
+            </Button>
+            <Button color="inherit" onClick={productHandler}>
+              Products
+            </Button>
+            <Button color="inherit" onClick={orderHandler}>
+              Orders
+            </Button>
+          </Typography>
 
-            <InputBase
-              className={classes.inputBase}
-              placeholder="Search…"
-              startAdornment={<SearchIcon />}
-            />
+          <InputBase
+            className={classes.inputBase}
+            placeholder="Search…"
+            startAdornment={<SearchIcon />}
+          />
 
-            <Badge badgeContent={count.state} color="primary">
-              <Button
-                className={classes.buttonCart}
-                onClick={cartHandler}
-                startIcon={<ShoppingCartIcon />}
-              >
-                Cart
-              </Button>
-            </Badge>
-
+          <Badge badgeContent={count.state} color="primary">
             <Button
-              className={classes.buttonProfile}
-              endIcon={<KeyboardArrowDownIcon />}
-              onClick={handleClick}
-              startIcon={<AccountBoxIcon />}
-            ></Button>
-            <Menu
-              anchorEl={dropdown}
-              id="simple-menu"
-              keepMounted
-              open={Boolean(dropdown)}
-              onClose={handleClose}
+              className={classes.buttonCart}
+              onClick={cartHandler}
+              startIcon={<ShoppingCartIcon />}
             >
-              {isLogged ? (
-                <>
-                  <MenuItem onClick={logoutHandler}>LogOut</MenuItem>
-                  <MenuItem onClick={resetPasswordHandler}>
-                    Reset Password
-                  </MenuItem>
-                </>
-              ) : (
-                <>
-                  <MenuItem onClick={loginHandler}>Login</MenuItem>
-                  <MenuItem onClick={registerHandler}>Register</MenuItem>
-                </>
-              )}
-            </Menu>
-          </Toolbar>
-        </AppBar>
-      </div>
+              Cart
+            </Button>
+          </Badge>
+
+          <Button
+            className={classes.buttonProfile}
+            endIcon={<KeyboardArrowDownIcon />}
+            onClick={handleClick}
+            startIcon={<AccountBoxIcon />}
+          ></Button>
+          <Menu
+            anchorEl={dropdown}
+            id="simple-menu"
+            keepMounted
+            open={Boolean(dropdown)}
+            onClose={handleClose}
+          >
+            {isLogged ? (
+              <>
+                <MenuItem onClick={logoutHandler}>LogOut</MenuItem>
+                <MenuItem onClick={resetPasswordHandler}>
+                  Reset Password
+                </MenuItem>
+              </>
+            ) : (
+              <>
+                <MenuItem onClick={loginHandler}>Login</MenuItem>
+                <MenuItem onClick={registerHandler}>Register</MenuItem>
+              </>
+            )}
+          </Menu>
+        </Toolbar>
+      </AppBar>
     </div>
   );
 }

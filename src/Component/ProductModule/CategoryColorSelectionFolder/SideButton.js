@@ -20,12 +20,17 @@ function SideButton() {
   const [color, setColor] = useState([]);
 
   const allProductHandler = () => {
+    /**
+     * @author Shraddha Tendulkar
+     * @function setProductData           useState() hook function to update the product values
+     */
     const onResponse = {
       success: (res) => {
         setProducts(res.data.docs);
       },
       error: (error) => {},
     };
+    // API to fetch Products
     API.listProduct(onResponse);
   };
 
@@ -36,8 +41,10 @@ function SideButton() {
       },
       error: (error) => {},
     };
+    //API to fetch categories
     API.category(onResponse);
   };
+
   const getColor = () => {
     const onResponse = {
       success: (res) => {
@@ -45,6 +52,7 @@ function SideButton() {
       },
       error: (error) => {},
     };
+    //API to fetch color
     API.color(onResponse);
   };
 
@@ -58,6 +66,7 @@ function SideButton() {
     const params = {
       category: category._id,
     };
+    //API to fetch product by category
     API.getProductsByCategory(onResponse, params);
   };
   const getProductsByColor = (category) => {
@@ -70,9 +79,11 @@ function SideButton() {
     const params = {
       category: category._id,
     };
+    //API to fetch product by color
     API.getProductsByColor(onResponse, params);
   };
 
+  //useEffect() hook
   useEffect(() => {
     getCategories();
     getColor();

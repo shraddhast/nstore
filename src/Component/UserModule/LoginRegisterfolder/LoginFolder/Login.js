@@ -35,11 +35,13 @@ function Login() {
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
+    // @function setValid               useState() hook function to update the user details
     setValid({
       ...valid,
       [name]: value,
     });
   };
+
   const registerHandler = () => {
     history.push("./register");
   };
@@ -55,6 +57,7 @@ function Login() {
         alert("Email error");
       },
     };
+    //Forgot password API call
     API.forgotPassword(onResponse, email);
   };
 
@@ -63,6 +66,10 @@ function Login() {
   };
 
   const loginHandler = (e) => {
+    /**
+     * @function setValid               useState() hook function to update the user details
+     * @function login                  API call function for user login
+     */
     e.preventDefault();
     const validError = validate(valid);
     if (Object.keys(validError).length !== 0) {
@@ -73,6 +80,11 @@ function Login() {
   };
 
   function login() {
+    /**
+     * @author Shraddha Tendulkar
+     * @param token                         Store logged In user token in localStorage
+     * @function history.push               useHistory() hook function to redirect page
+     */
     const onResponse = {
       success: (res) => {
         localStorage.setItem("token", res.data.token);
@@ -84,6 +96,7 @@ function Login() {
         alert("Invalid Login");
       },
     };
+    //API call for login user
     API.login(onResponse, valid);
   }
 

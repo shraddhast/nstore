@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router";
 import Rating from "@material-ui/lab/Rating";
 import {
   Card,
@@ -8,17 +9,18 @@ import {
   Button,
   CardContent,
 } from "@material-ui/core";
-import { useHistory } from "react-router";
 
 import CardStyles from "./CardStyles";
 
 function Cards(props) {
   const classes = CardStyles();
   const history = useHistory();
+
+  //props destructuring
   const { mainImage, description, price, avgRating, id } = props.data;
-  console.log(props);
 
   const cardHandler = (data) => {
+    //useHistory() Hook
     history.push({
       pathname: `/products/${id}`,
     });

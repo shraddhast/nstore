@@ -22,29 +22,35 @@ function Product() {
       },
       error: (error) => {},
     };
+    //API call for sorting as per rating
     API.sortRating(onResponse);
   };
 
   const lowPriceHandler = () => {
+    // @function setProducts               useState() hook function to update the product details
     const onResponse = {
       success: (res) => {
         setProducts(res.data.docs);
       },
       error: (error) => {},
     };
+    //API call for sorting as per low to high price
     API.sortLowPrice(onResponse);
   };
 
   const highPriceHandler = () => {
+    // @function setProducts               useState() hook function to update the product details
     const onResponse = {
       success: (res) => {
         setProducts(res.data.docs);
       },
       error: (error) => {},
     };
+    //API call for sorting as per high to low  price
     API.sortHighPrice(onResponse);
   };
 
+  //useEffect() hook
   useEffect(() => {
     const onResponse = {
       success: (res) => {

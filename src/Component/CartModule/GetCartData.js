@@ -40,7 +40,8 @@ function GetCartData() {
   const [dialog, setDialog] = useState(false);
   const [grandTotal, setGrandTotal] = useState();
   const [products, setProducts] = useState([]);
-  const GST = (5 / 100) * grandTotal;
+  const value = (5 / 100) * grandTotal;
+  const GST = value.toFixed(2);
   const finalTotal = grandTotal + GST;
 
   const addressApproveHandler = (id) => {
@@ -53,6 +54,7 @@ function GetCartData() {
           theme: "darkblue",
           //native: "true",
         });
+        getFromCart();
         history.push("./getOrderDetails");
       },
       error: (error) => {},
@@ -77,11 +79,6 @@ function GetCartData() {
     };
     API.deleteFromCart(onResponse, id);
   };
-  const googlePayHandler = () => {
-    <PaymentMode />;
-    console.log("payment");
-  };
-
   const listAddress = () => {
     const onResponse = {
       success: (res) => {
@@ -94,6 +91,10 @@ function GetCartData() {
   };
 
   useEffect(() => {
+    getFromCart();
+  }, []);
+
+  const getFromCart = () => {
     const onResponse = {
       success: (res) => {
         setProducts(res.data.products);
@@ -103,8 +104,7 @@ function GetCartData() {
       error: (error) => {},
     };
     API.getFromCart(onResponse);
-  }, []);
-
+  };
   return (
     <div>
       <Navbar />
@@ -163,13 +163,16 @@ function GetCartData() {
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
-                <Button onClick={dialogHandler} color="primary">
+                <Button
+                  onClick={dialogHandler}
+                  className={classes.cancelButton}
+                >
                   Cancel
                 </Button>
                 <PaymentMode />
                 <Button
                   onClick={() => addressApproveHandler(address?._id)}
-                  color="primary"
+                  className={classes.payButton}
                 >
                   COD and Finish
                 </Button>

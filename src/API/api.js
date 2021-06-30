@@ -108,7 +108,6 @@ export const API = {
     const url = `${UPDATE_PRODUCT_CART}/${id}`;
     return request(onResponse, url, data, {}, "PUT");
   },
-
   singleProduct: (onResponse, id) => {
     const url = `${PRODUCT_ID}/${id}`;
     return request(onResponse, url, {}, {}, "GET");

@@ -31,6 +31,10 @@ function ForgotPassword() {
   const { verification, password, confirm_password } = valid;
 
   const changeHandler = (e) => {
+    /**
+     * @author Shraddha Tendulkar
+     * @function setValid               useState() hook function to update the user details
+     */
     e.preventDefault();
     const { name, value } = e.target;
     setValid({
@@ -40,7 +44,13 @@ function ForgotPassword() {
   };
 
   const [errors, setErrors] = useState();
+
   const submitHandler = (e) => {
+    /**
+     * @author Shraddha Tendulkar
+     * @function setErrors               useState() hook function to update the errors in validation
+     * @function resetPassword           API call function for reset Password
+     */
     e.preventDefault();
     setErrors(validate(valid));
 
@@ -59,6 +69,7 @@ function ForgotPassword() {
         alert(error);
       },
     };
+    //API call for reset Password
     API.resetPassword(onResponse, valid);
   }
   return (
@@ -69,7 +80,6 @@ function ForgotPassword() {
         <hr />
         <Typography className={classes.alert}>
           <Typography className={classes.alertMessage}>
-            {/* <InfoIcon className={classes.icon} /> */}
             Verification code has been send to your register email id
           </Typography>
         </Typography>

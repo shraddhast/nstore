@@ -10,7 +10,6 @@ function PushNotification() {
       subtitle: "How are you doing??",
       message: "Take care of yourself",
       theme: "darkblue",
-      //native: "true",
     });
   };
   return (

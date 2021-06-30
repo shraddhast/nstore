@@ -49,23 +49,19 @@ function Register() {
     gender,
   } = valid;
   const [errors, setErrors] = useState();
+
   const changeHandler = (e) => {
+    /**
+     * @author Shraddha Tendulkar
+     * @function setValid               useState() hook function to update the user details
+     */
     const { name, value } = e.target;
     setValid({
       ...valid,
       [name]: value,
     });
   };
-  const registerHandler = (e) => {
-    e.preventDefault();
 
-    const validError = validate(valid);
-    if (Object.keys(validError).length !== 0) {
-      setErrors(validError);
-    } else {
-      register();
-    }
-  };
   const register = () => {
     const onResponse = {
       success: (res) => {
@@ -74,7 +70,23 @@ function Register() {
       },
       error: (error) => {},
     };
+    //User Registration API
     API.register(onResponse, valid);
+  };
+
+  const registerHandler = (e) => {
+    e.preventDefault();
+    /**
+     * @author Shraddha Tendulkar
+     * @function validate               Validate function for registration validation
+     * @function setErrors              useState() hook function to set Errors in validation
+     */
+    const validError = validate(valid);
+    if (Object.keys(validError).length !== 0) {
+      setErrors(validError);
+    } else {
+      register();
+    }
   };
   return (
     <div>

@@ -7,6 +7,8 @@ import Cards from "./Cards";
 
 function CardRoot() {
   const [products, setProducts] = useState();
+
+  // useEffect() Hook
   useEffect(() => {
     const onResponse = {
       success: (res) => {
@@ -16,6 +18,7 @@ function CardRoot() {
       },
       error: (error) => {},
     };
+    //All products data fetch
     API.listProduct(onResponse);
   }, []);
 
